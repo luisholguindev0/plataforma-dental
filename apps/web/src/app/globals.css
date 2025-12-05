@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 /* ============================================
+   TAILWIND V4 CONTENT PATHS
+   Especificar qué archivos escanear para clases
+   ============================================ */
+@source "./**/*.{js,ts,jsx,tsx}";
+@source "../components/**/*.{js,ts,jsx,tsx}";
+@source "../lib/**/*.{js,ts,jsx,tsx}";
+
+/* ============================================
    TAILWIND V4 THEME CONFIGURATION
    Sistema de diseño unificado y moderno
    ============================================ */
