@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
-import "./globals.css";
+import "./global.css";
 import FuturisticBackground from "@/components/layout/FuturisticBackground";
 
 const dmSans = DM_Sans({
