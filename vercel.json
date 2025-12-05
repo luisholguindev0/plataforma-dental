@@ -5,6 +5,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet . ../packages/database/"
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet apps/web packages/database"
 }
 
