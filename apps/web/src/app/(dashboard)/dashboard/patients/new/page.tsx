@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import type { PatientInsert, ServiceType } from "database/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -16,12 +17,25 @@ const serviceOptions = [
   { value: "otro", label: "Otro" },
 ];
 
+type FormState = {
+  whatsapp_number: string;
+  full_name: string;
+  email: string;
+  preferred_service: ServiceType | "";
+  notes: string;
+  address: string;
+  has_budget: boolean;
+  has_urgency: boolean;
+  is_local: boolean;
+  interested_in_appointment: boolean;
+};
+
 export default function NewPatientPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormState>({
     whatsapp_number: "",
     full_name: "",
     email: "",
@@ -57,18 +71,24 @@ export default function NewPatientPage() {
 
     try {
       const supabase = createClient();
-      const { error } = await supabase.from("patients").insert({
+      const payload: PatientInsert = {
         whatsapp_number: formData.whatsapp_number,
         full_name: formData.full_name || null,
         email: formData.email || null,
-        preferred_service: formData.preferred_service || null,
+        preferred_service: formData.preferred_service
+          ? (formData.preferred_service as ServiceType)
+          : null,
         notes: formData.notes || null,
         address: formData.address || null,
         has_budget: formData.has_budget,
         has_urgency: formData.has_urgency,
         is_local: formData.is_local,
         interested_in_appointment: formData.interested_in_appointment,
-      } as any); // Type assertion needed due to Supabase type inference limitations
+        qualification_status: "pending",
+      };
+
+      // @ts-expect-error Supabase type inference mismatch
+      const { error } = await supabase.from("patients").insert(payload);
 
       if (error) {
         if (error.code === "23505") {

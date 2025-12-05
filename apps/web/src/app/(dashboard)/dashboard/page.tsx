@@ -126,24 +126,20 @@ export default async function DashboardPage() {
 
   const colorClasses = {
     blue: {
-      bg: "bg-blue-50",
-      icon: "bg-blue-100 text-blue-600",
-      text: "text-blue-600",
+      icon: "bg-primary-500/15 text-primary-100",
+      text: "text-primary-100",
     },
     green: {
-      bg: "bg-emerald-50",
-      icon: "bg-emerald-100 text-emerald-600",
-      text: "text-emerald-600",
+      icon: "bg-success-600/20 text-success-100",
+      text: "text-success-100",
     },
     purple: {
-      bg: "bg-purple-50",
-      icon: "bg-purple-100 text-purple-600",
-      text: "text-purple-600",
+      icon: "bg-primary-500/20 text-primary-100",
+      text: "text-primary-100",
     },
         amber: {
-          bg: "bg-amber-50",
-          icon: "bg-gradient-to-br from-primary-500/20 to-primary-400/20 text-primary-600",
-          text: "text-primary-600",
+          icon: "bg-gradient-to-br from-primary-500/25 to-secondary-500/20 text-primary-100",
+          text: "text-primary-100",
         },
   };
 
@@ -151,10 +147,10 @@ export default async function DashboardPage() {
     <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="px-2 sm:px-0">
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold bg-gradient-to-r from-primary-500 to-primary-400 bg-clip-text text-transparent">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
           Dashboard
         </h1>
-        <p className="text-gray-600 text-sm sm:text-base mt-1">
+        <p className="text-gray-400 text-sm sm:text-base mt-1">
           Bienvenido al panel de control. Aquí tienes un resumen de tu negocio.
         </p>
       </div>
@@ -171,18 +167,20 @@ export default async function DashboardPage() {
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">{stat.title}</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-400 font-medium mb-1">{stat.title}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white mt-1">
                     {stat.value}
                   </p>
                 </div>
-                <div className={`p-2.5 sm:p-3 rounded-xl ${colors.icon} flex-shrink-0 ml-3 group-hover:scale-110 transition-transform`}>
+                <div
+                  className={`p-2.5 sm:p-3 rounded-xl ${colors.icon} flex-shrink-0 ml-3 group-hover:scale-110 transition-transform`}
+                >
                   <stat.icon size={20} className="sm:w-6 sm:h-6" />
                 </div>
               </div>
               <div className="flex items-center gap-1 text-xs sm:text-sm">
-                <TrendingUp size={14} className="sm:w-4 sm:h-4 text-success-500" />
-                <span className="text-success-600 font-medium">+12%</span>
+                <TrendingUp size={14} className="sm:w-4 sm:h-4 text-success-300" />
+                <span className="text-success-200 font-medium">+12%</span>
                 <span className="text-gray-500">vs mes anterior</span>
               </div>
             </Link>
@@ -194,14 +192,14 @@ export default async function DashboardPage() {
       <div className="grid lg:grid-cols-2 gap-6 sm:gap-8">
         {/* Today's Appointments */}
         <div className="premium-card">
-          <div className="p-5 sm:p-6 border-b border-gray-200">
+          <div className="p-5 sm:p-6 border-b border-gray-800">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+              <h2 className="text-lg sm:text-xl font-semibold text-white">
                 Citas de Hoy
               </h2>
               <Link
                 href="/dashboard/appointments"
-                className="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors inline-flex items-center gap-1"
+                className="text-sm text-primary-100 hover:text-white font-medium transition-colors inline-flex items-center gap-1"
               >
                 Ver todas
                 <span>→</span>
@@ -213,9 +211,9 @@ export default async function DashboardPage() {
               <div className="text-center py-8 sm:py-12">
                 <Calendar
                   size={48}
-                  className="mx-auto text-gray-300 mb-3"
+                  className="mx-auto text-gray-700 mb-3"
                 />
-                <p className="text-gray-600 text-sm sm:text-base">
+                <p className="text-gray-400 text-sm sm:text-base">
                   No hay citas programadas para hoy
                 </p>
               </div>
@@ -224,16 +222,16 @@ export default async function DashboardPage() {
                 {stats.pendingAppointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gray-900/60 hover:bg-gray-800 transition-colors border border-gray-800"
                   >
                     <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary-500/10 to-primary-400/10 flex-shrink-0">
-                      <Clock size={18} className="sm:w-5 sm:h-5 text-primary-600" />
+                      <Clock size={18} className="sm:w-5 sm:h-5 text-primary-100" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 truncate text-sm sm:text-base">
+                      <p className="font-medium text-white truncate text-sm sm:text-base">
                         {appointment.patient?.full_name || "Sin nombre"}
                       </p>
-                      <p className="text-xs sm:text-sm text-gray-600">
+                      <p className="text-xs sm:text-sm text-gray-400">
                         {appointment.appointment_time?.slice(0, 5)} -{" "}
                         {appointment.service_type || "Valoración"}
                       </p>
@@ -256,14 +254,14 @@ export default async function DashboardPage() {
 
         {/* Recent Patients */}
         <div className="premium-card">
-          <div className="p-5 sm:p-6 border-b border-gray-200">
+          <div className="p-5 sm:p-6 border-b border-gray-800">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+              <h2 className="text-lg sm:text-xl font-semibold text-white">
                 Pacientes Recientes
               </h2>
               <Link
                 href="/dashboard/patients"
-                className="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors inline-flex items-center gap-1"
+                className="text-sm text-primary-100 hover:text-white font-medium transition-colors inline-flex items-center gap-1"
               >
                 Ver todos
                 <span>→</span>
@@ -275,9 +273,9 @@ export default async function DashboardPage() {
               <div className="text-center py-8 sm:py-12">
                 <Users
                   size={48}
-                  className="mx-auto text-gray-300 mb-3"
+                  className="mx-auto text-gray-700 mb-3"
                 />
-                <p className="text-gray-600 text-sm sm:text-base">
+                <p className="text-gray-400 text-sm sm:text-base">
                   No hay pacientes registrados
                 </p>
               </div>
@@ -286,7 +284,7 @@ export default async function DashboardPage() {
                 {stats.recentPatients.map((patient) => (
                   <div
                     key={patient.id}
-                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gray-900/60 hover:bg-gray-800 transition-colors border border-gray-800"
                   >
                     <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-primary-400/20 font-semibold text-primary-700 flex-shrink-0 text-sm sm:text-base">
                       {patient.full_name
@@ -294,10 +292,10 @@ export default async function DashboardPage() {
                         : patient.whatsapp_number?.slice(-2) || "??"}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 truncate text-sm sm:text-base">
+                      <p className="font-medium text-white truncate text-sm sm:text-base">
                         {patient.full_name || "Sin nombre"}
                       </p>
-                      <p className="text-xs sm:text-sm text-gray-600">
+                      <p className="text-xs sm:text-sm text-gray-400">
                         {patient.whatsapp_number}
                       </p>
                     </div>
@@ -326,47 +324,47 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <div className="premium-card p-5 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">
           Acciones Rápidas
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           <Link
             href="/dashboard/patients/new"
-            className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gray-50 hover:bg-gradient-to-br hover:from-primary-500 hover:to-primary-400 hover:text-white transition-all duration-300 group"
+            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-800 bg-gray-900/60 hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-white transition-all duration-300 group"
           >
             <Users
               size={24}
-              className="text-primary-600 group-hover:text-white transition-colors"
+              className="text-primary-100 group-hover:text-white transition-colors"
             />
             <span className="text-xs sm:text-sm font-medium text-center">Nuevo Paciente</span>
           </Link>
           <Link
             href="/dashboard/appointments/new"
-            className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gray-50 hover:bg-gradient-to-br hover:from-primary-500 hover:to-primary-400 hover:text-white transition-all duration-300 group"
+            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-800 bg-gray-900/60 hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-white transition-all duration-300 group"
           >
             <Calendar
               size={24}
-              className="text-primary-600 group-hover:text-white transition-colors"
+              className="text-primary-100 group-hover:text-white transition-colors"
             />
             <span className="text-xs sm:text-sm font-medium text-center">Nueva Cita</span>
           </Link>
           <Link
             href="/dashboard/finances/new"
-            className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gray-50 hover:bg-gradient-to-br hover:from-primary-500 hover:to-primary-400 hover:text-white transition-all duration-300 group"
+            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-800 bg-gray-900/60 hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-white transition-all duration-300 group"
           >
             <DollarSign
               size={24}
-              className="text-primary-600 group-hover:text-white transition-colors"
+              className="text-primary-100 group-hover:text-white transition-colors"
             />
             <span className="text-xs sm:text-sm font-medium text-center">Nueva Transacción</span>
           </Link>
           <Link
             href="/dashboard/conversations"
-            className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gray-50 hover:bg-gradient-to-br hover:from-primary-500 hover:to-primary-400 hover:text-white transition-all duration-300 group"
+            className="flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-800 bg-gray-900/60 hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-white transition-all duration-300 group"
           >
             <AlertCircle
               size={24}
-              className="text-primary-600 group-hover:text-white transition-colors"
+              className="text-primary-100 group-hover:text-white transition-colors"
             />
             <span className="text-xs sm:text-sm font-medium text-center">Ver Chats</span>
           </Link>

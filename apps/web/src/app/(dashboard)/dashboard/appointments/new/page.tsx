@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, Loader2, Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import type { AppointmentInsert } from "database/types";
+import type { AppointmentInsert, Database } from "database/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -140,9 +140,8 @@ export default function NewAppointmentPage() {
         cancellation_reason: null,
       };
       // Type assertion needed due to Supabase type inference limitations with custom Database types
-      const { error } = await supabase
-        .from("appointments")
-        .insert(appointmentData as any);
+      // @ts-expect-error Supabase type inference mismatch
+      const { error } = await supabase.from("appointments").insert(appointmentData);
 
       if (error) {
         if (error.code === "23505") {

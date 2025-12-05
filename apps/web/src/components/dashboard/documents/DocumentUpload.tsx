@@ -2,11 +2,11 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Upload, X, Loader2 } from "lucide-react";
+import { Upload, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import type { PatientDocumentInsert } from "database/types";
 
 interface Patient {
   id: string;
@@ -75,7 +75,7 @@ export default function DocumentUpload({ patients }: DocumentUploadProps) {
       }
 
       // Save document metadata
-      const { error: dbError } = await supabase.from("patient_documents").insert({
+      const payload: PatientDocumentInsert = {
         patient_id: patientId,
         file_name: selectedFile.name,
         file_path: fileName,
@@ -83,7 +83,11 @@ export default function DocumentUpload({ patients }: DocumentUploadProps) {
         mime_type: selectedFile.type,
         document_type: documentType,
         description: description || null,
-      } as any);
+      };
+
+      const { error: dbError } = await supabase
+        .from("patient_documents")
+        .insert(payload as any);
 
       if (dbError) {
         throw new Error("Error al guardar el documento");

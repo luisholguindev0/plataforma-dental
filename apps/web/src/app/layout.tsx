@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./global.css";
-import FuturisticBackground from "@/components/layout/FuturisticBackground";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | Dr. Jhoiner Marquez",
   },
   description:
-    "Odontología de vanguardia. Experimenta el futuro del diseño de sonrisa en Barranquilla.",
+    "Odontología estética digital: citas, pacientes, documentos y finanzas con un dashboard premium y seguro.",
   keywords: [
     "dentista Barranquilla",
     "odontólogo Barranquilla",
@@ -90,6 +89,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   category: "Salud",
+  themeColor: "#05060a",
 };
 
 // JSON-LD Schema for Local Business
@@ -128,7 +128,10 @@ const jsonLd = {
       closes: "12:00",
     },
   ],
-  sameAs: [],
+  sameAs: [
+    "https://www.instagram.com/",
+    "https://www.facebook.com/",
+  ],
   priceRange: "$$",
   servesCuisine: "Dental Services",
   areaServed: {

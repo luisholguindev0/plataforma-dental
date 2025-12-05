@@ -15,11 +15,34 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
+
+  const validate = () => {
+    if (!email || !password) {
+      return "Completa tu correo y contraseña.";
+    }
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      return "Ingresa un correo válido.";
+    }
+    if (password.length < 8) {
+      return "La contraseña debe tener al menos 8 caracteres.";
+    }
+    return null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    setStatus(null);
+
+    const validationError = validate();
+    if (validationError) {
+      setIsLoading(false);
+      setError(validationError);
+      return;
+    }
 
     try {
       const supabase = createClient();
@@ -29,12 +52,15 @@ export default function LoginPage() {
       });
 
       if (error) {
-        setError(error.message === "Invalid login credentials" 
-          ? "Credenciales inválidas. Por favor verifica tu email y contraseña."
-          : error.message);
+        setError(
+          error.message === "Invalid login credentials"
+            ? "Credenciales inválidas. Por favor verifica tu email y contraseña."
+            : error.message
+        );
         return;
       }
 
+      setStatus("Acceso concedido. Redirigiendo...");
       router.push("/dashboard");
       router.refresh();
     } catch (err) {
@@ -47,42 +73,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-gradient-to-br from-gray-50 via-primary-50/30 to-gray-100">
-      {/* Subtle pattern overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(106,91,255,0.18),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(39,197,255,0.18),transparent_30%),linear-gradient(135deg,#05060a_0%,#0b0f18_100%)] p-4 sm:p-6">
+      {/* Subtle grid */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.25]">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:48px_48px]" />
+      </div>
 
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary-500/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-400/10 to-transparent rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      {/* Decorative glows */}
+      <div className="absolute top-0 right-0 h-72 w-72 -translate-y-1/2 translate-x-1/3 rounded-full bg-primary-500/20 blur-[120px]" />
+      <div className="absolute bottom-0 left-0 h-80 w-80 translate-y-1/2 -translate-x-1/3 rounded-full bg-secondary-500/16 blur-[120px]" />
 
       <div className="relative w-full max-w-md z-10">
         {/* Logo */}
         <div className="text-center mb-8 animate-fade-in">
           <Link href="/" className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 group">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-primary-500 to-primary-400 flex items-center justify-center shadow-lg shadow-primary-500/30 group-hover:shadow-xl group-hover:shadow-primary-500/40 transition-all duration-300">
-              <span className="text-white font-serif font-bold text-2xl sm:text-3xl">JM</span>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-primary-500 via-secondary-500 to-primary-300 flex items-center justify-center shadow-[0_0_45px_rgba(106,91,255,0.45)] group-hover:shadow-[0_0_60px_rgba(106,91,255,0.55)] transition-all duration-300">
+              <span className="text-gray-950 font-serif font-bold text-2xl sm:text-3xl">JM</span>
             </div>
             <div className="text-center sm:text-left">
-              <p className="font-serif text-gray-900 font-semibold text-xl sm:text-2xl leading-tight">
+              <p className="font-serif text-white font-semibold text-xl sm:text-2xl leading-tight">
                 Dr. Jhoiner Marquez
               </p>
-              <p className="text-sm text-gray-600 mt-1">Panel de Administración</p>
+              <p className="text-sm text-gray-400 mt-1">Panel de administración</p>
             </div>
           </Link>
         </div>
 
         {/* Login card */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-gray-200 animate-fade-in delay-100">
+        <div className="rounded-3xl border border-gray-800 bg-gray-900/85 p-6 sm:p-8 md:p-10 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.95)] backdrop-blur animate-fade-in delay-100">
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-3">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent mb-3">
               Bienvenido
             </h1>
-            <p className="text-gray-600 text-sm sm:text-base">
+            <p className="text-gray-300 text-sm sm:text-base">
               Ingresa tus credenciales para acceder al panel
             </p>
           </div>
@@ -90,8 +113,13 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* Error message */}
             {error && (
-              <div className="bg-error-50 border border-error-200 rounded-xl p-4 animate-fade-in">
-                <p className="text-error-600 text-sm">{error}</p>
+              <div className="rounded-xl border border-error-500/30 bg-error-500/10 p-4 text-error-100 animate-fade-in" role="alert">
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+            {status && (
+              <div className="rounded-xl border border-primary-500/30 bg-primary-500/10 p-4 text-primary-100 animate-fade-in" role="status">
+                <p className="text-sm">{status}</p>
               </div>
             )}
 
@@ -99,13 +127,16 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="mb-2 block text-sm font-medium text-gray-200"
               >
                 Correo electrónico
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors z-10">
-                  <Mail size={20} className={`transition-colors ${email ? "text-primary-600" : "text-gray-400"}`} />
+                  <Mail
+                    size={20}
+                    className={`transition-colors ${email ? "text-primary-100" : "text-gray-500"}`}
+                  />
                 </div>
                 <Input
                   id="email"
@@ -123,13 +154,16 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="mb-2 block text-sm font-medium text-gray-200"
               >
                 Contraseña
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors z-10">
-                  <Lock size={20} className={`transition-colors ${password ? "text-primary-600" : "text-gray-400"}`} />
+                  <Lock
+                    size={20}
+                    className={`transition-colors ${password ? "text-primary-100" : "text-gray-500"}`}
+                  />
                 </div>
                 <Input
                   id="password"
@@ -143,13 +177,13 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center hover:opacity-70 transition-opacity z-10"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-gray-300 transition-colors z-10"
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
                   {showPassword ? (
-                    <EyeOff size={20} className="text-gray-400" />
+                    <EyeOff size={20} />
                   ) : (
-                    <Eye size={20} className="text-gray-400" />
+                    <Eye size={20} />
                   )}
                 </button>
               </div>
@@ -176,7 +210,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-primary-100 transition-colors group"
             >
               <span className="group-hover:-translate-x-1 transition-transform">←</span>
               <span>Volver al sitio web</span>

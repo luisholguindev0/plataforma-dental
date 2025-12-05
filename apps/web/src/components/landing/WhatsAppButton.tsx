@@ -39,16 +39,16 @@ export default function WhatsAppButton() {
       {/* Tooltip */}
       {showTooltip && (
         <div className="absolute bottom-full right-0 mb-4 animate-fade-in w-64">
-          <div className="relative bg-white rounded-xl shadow-xl p-4 border border-gray-200">
+          <div className="relative rounded-xl border border-gray-800 bg-gray-900/90 p-4 text-gray-100 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.85)] backdrop-blur">
             <button
               onClick={() => setShowTooltip(false)}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors border border-gray-200"
+              className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-800 bg-gray-800 text-gray-300 transition-colors hover:bg-gray-700"
             >
               <X size={12} />
             </button>
-            <p className="text-sm text-gray-700">
-              <span className="text-primary-600 font-semibold block mb-1">¿Tienes preguntas?</span>
-              Estamos disponibles para ayudarte. Contáctanos por WhatsApp.
+            <p className="text-sm text-gray-200">
+              <span className="text-primary-100 font-semibold block mb-1">¿Tienes preguntas?</span>
+              Estamos disponibles para ayudarte por WhatsApp.
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function WhatsAppButton() {
         href={`https://wa.me/${whatsappNumber}?text=${message}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-16 h-16 rounded-full bg-success-500 hover:bg-success-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+        className="group relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-success-500 to-success-400 text-gray-950 shadow-[0_20px_60px_-25px_rgba(16,185,129,0.8)] transition-transform hover:-translate-y-1"
         aria-label="Contactar por WhatsApp"
       >
         <MessageCircle size={28} className="relative z-10" />

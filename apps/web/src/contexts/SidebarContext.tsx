@@ -10,14 +10,11 @@ interface SidebarContextType {
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  useEffect(() => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
     const savedState = localStorage.getItem("sidebarCollapsed");
-    if (savedState !== null) {
-      setIsCollapsed(JSON.parse(savedState));
-    }
-  }, []);
+    return savedState !== null ? JSON.parse(savedState) : false;
+  });
 
   useEffect(() => {
     localStorage.setItem("sidebarCollapsed", JSON.stringify(isCollapsed));

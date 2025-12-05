@@ -7,7 +7,6 @@ import {
   TrendingDown,
   ArrowUpRight,
   ArrowDownRight,
-  Filter,
   Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
 
   // Calculate date range based on period
   const now = new Date();
-  let startDate = new Date();
+  const startDate = new Date();
   const period = params.period || "month";
 
   if (period === "week") {
@@ -52,7 +51,10 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
     query = query.eq("patient_id", params.patient);
   }
 
-  const { data: transactionsData } = await query;
+  const { data: transactionsData, error: transactionsError } = await query;
+  if (transactionsError) {
+    console.error("Error fetching transactions", transactionsError.message);
+  }
 
   const transactions = (transactionsData || []) as Array<{
     id: string;
@@ -81,10 +83,13 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
   const netBalance = totalIncome - totalExpense;
 
   // Get patients for filter
-  const { data: patientsData } = await supabase
+  const { data: patientsData, error: patientsError } = await supabase
     .from("patients")
     .select("id, full_name, whatsapp_number")
     .order("full_name", { ascending: true });
+  if (patientsError) {
+    console.error("Error fetching patients (finances)", patientsError.message);
+  }
 
   const patients = (patientsData || []) as Array<{
     id: string;
@@ -121,31 +126,20 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
     ? ((totalIncome - prevIncome) / prevIncome * 100).toFixed(1)
     : "0";
 
-  const categories = [
-    "Tratamiento",
-    "Valoración",
-    "Radiografía",
-    "Materiales",
-    "Nómina",
-    "Servicios",
-    "Marketing",
-    "Otros",
-  ];
-
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-primary-600">
+          <h1 className="text-2xl font-serif font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
             Finanzas
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Gestiona los ingresos y gastos del consultorio.
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline">
+          <Button variant="outline" className="border-gray-800 text-gray-100 hover:border-primary-400">
             <Download size={18} />
             Exportar
           </Button>
@@ -160,68 +154,68 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
 
       {/* Stats */}
       <div className="grid sm:grid-cols-3 gap-6">
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="rounded-2xl border border-gray-800 bg-gray-900/70 p-6 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.85)]">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-gray-500">Ingresos</p>
-              <p className="text-3xl font-bold text-success-600 mt-1">
+              <p className="text-sm text-gray-400">Ingresos</p>
+              <p className="text-3xl font-bold text-success-200 mt-1">
                 ${totalIncome.toLocaleString("es-CO")}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-success-100">
-              <TrendingUp size={24} className="text-success-600" />
+            <div className="p-3 rounded-xl bg-success-600/15">
+              <TrendingUp size={24} className="text-success-200" />
             </div>
           </div>
           <div className="mt-4 flex items-center gap-1 text-sm">
             {Number(incomeChange) >= 0 ? (
               <>
-                <ArrowUpRight size={16} className="text-success-500" />
-                <span className="text-success-500 font-medium">+{incomeChange}%</span>
+                <ArrowUpRight size={16} className="text-success-300" />
+                <span className="text-success-200 font-medium">+{incomeChange}%</span>
               </>
             ) : (
               <>
-                <ArrowDownRight size={16} className="text-error-500" />
-                <span className="text-error-500 font-medium">{incomeChange}%</span>
+                <ArrowDownRight size={16} className="text-error-300" />
+                <span className="text-error-200 font-medium">{incomeChange}%</span>
               </>
             )}
-            <span className="text-gray-400">vs periodo anterior</span>
+            <span className="text-gray-500">vs periodo anterior</span>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="rounded-2xl border border-gray-800 bg-gray-900/70 p-6 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.85)]">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-gray-500">Gastos</p>
-              <p className="text-3xl font-bold text-error-600 mt-1">
+              <p className="text-sm text-gray-400">Gastos</p>
+              <p className="text-3xl font-bold text-error-200 mt-1">
                 ${totalExpense.toLocaleString("es-CO")}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-error-100">
-              <TrendingDown size={24} className="text-error-600" />
+            <div className="p-3 rounded-xl bg-error-600/15">
+              <TrendingDown size={24} className="text-error-200" />
             </div>
           </div>
-          <div className="mt-4 text-sm text-gray-400">
+          <div className="mt-4 text-sm text-gray-500">
             {transactions?.filter((t) => t.type === "expense").length || 0} transacciones
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="rounded-2xl border border-gray-800 bg-gray-900/70 p-6 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.85)]">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-gray-500">Balance Neto</p>
+              <p className="text-sm text-gray-400">Balance Neto</p>
               <p
                 className={`text-3xl font-bold mt-1 ${
-                  netBalance >= 0 ? "text-primary-600" : "text-error-600"
+                  netBalance >= 0 ? "text-primary-100" : "text-error-200"
                 }`}
               >
                 ${netBalance.toLocaleString("es-CO")}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-primary-500/10">
-              <DollarSign size={24} className="text-primary-600" />
+            <div className="p-3 rounded-xl bg-primary-500/15">
+              <DollarSign size={24} className="text-primary-100" />
             </div>
           </div>
-          <div className="mt-4 text-sm text-gray-400">
+          <div className="mt-4 text-sm text-gray-500">
             Período: {period === "week" ? "Última semana" : period === "month" ? "Último mes" : "Último año"}
           </div>
         </div>
@@ -231,7 +225,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
       <div className="flex flex-col sm:flex-row gap-4">
         <select
           defaultValue={params.period || "month"}
-          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="px-4 py-2.5 rounded-xl border border-gray-800 bg-gray-900/70 text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
         >
           <option value="week">Última semana</option>
           <option value="month">Último mes</option>
@@ -240,7 +234,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
 
         <select
           defaultValue={params.type || "all"}
-          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="px-4 py-2.5 rounded-xl border border-gray-800 bg-gray-900/70 text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
         >
           <option value="all">Todos los tipos</option>
           <option value="income">Ingresos</option>
@@ -249,7 +243,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
 
         <select
           defaultValue={params.patient || ""}
-          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="px-4 py-2.5 rounded-xl border border-gray-800 bg-gray-900/70 text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
         >
           <option value="">Todos los pacientes</option>
           {patients?.map((patient) => (
@@ -261,36 +255,36 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
       </div>
 
       {/* Transactions table */}
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div className="rounded-2xl border border-gray-800 bg-gray-900/70 overflow-hidden shadow-[0_30px_70px_-50px_rgba(0,0,0,0.85)]">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <tr className="bg-gray-950/50 border-b border-gray-800">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Fecha
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Descripción
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Paciente
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Categoría
                 </th>
-                <th className="text-right px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-right px-6 py-4 text-sm font-semibold text-gray-400">
                   Monto
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-800">
               {transactions && transactions.length > 0 ? (
                 transactions.map((trx) => (
                   <tr
                     key={trx.id}
-                    className="hover:bg-gray-50 transition-colors"
+                    className="hover:bg-gray-900 transition-colors"
                   >
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-gray-400">
                       {new Date(trx.transaction_date).toLocaleDateString("es-CO", {
                         day: "numeric",
                         month: "short",
@@ -298,7 +292,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
                       })}
                     </td>
                     <td className="px-6 py-4">
-                      <p className="font-medium text-gray-800">
+                      <p className="font-medium text-white">
                         {trx.description || "Sin descripción"}
                       </p>
                       {trx.payment_method && (
@@ -307,27 +301,27 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
                         </p>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-gray-300">
                       {trx.patient ? (
                         <Link
                           href={`/dashboard/patients/${trx.patient.id}`}
-                          className="hover:text-primary-600"
+                          className="hover:text-primary-100"
                         >
                           {trx.patient.full_name || trx.patient.whatsapp_number}
                         </Link>
                       ) : (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-gray-500">-</span>
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <span className="px-2 py-1 bg-gray-100 rounded-lg text-xs text-gray-600">
+                      <span className="px-2 py-1 rounded-lg bg-gray-800 text-xs text-gray-200">
                         {trx.category || "Sin categoría"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <span
                         className={`font-semibold ${
-                          trx.type === "income" ? "text-success-600" : "text-error-600"
+                          trx.type === "income" ? "text-success-200" : "text-error-200"
                         }`}
                       >
                         {trx.type === "income" ? "+" : "-"}$
@@ -339,16 +333,11 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
               ) : (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center">
-                    <DollarSign
-                      size={48}
-                      className="mx-auto text-gray-300 mb-3"
-                    />
-                    <p className="text-gray-500">
-                      No hay transacciones registradas
-                    </p>
+                    <DollarSign size={48} className="mx-auto text-gray-700 mb-3" />
+                    <p className="text-gray-400">No hay transacciones registradas</p>
                     <Link
                       href="/dashboard/finances/new"
-                      className="text-primary-600 hover:text-primary-700 font-medium text-sm mt-2 inline-block"
+                      className="text-primary-100 hover:text-white font-medium text-sm mt-2 inline-block"
                     >
                       Registrar primera transacción →
                     </Link>

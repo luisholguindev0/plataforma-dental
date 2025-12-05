@@ -47,14 +47,14 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
     .toUpperCase() || "U";
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-40 border-b border-gray-800 bg-gray-950/80 backdrop-blur-xl">
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0 h-auto sm:h-16 px-4 sm:px-6 lg:px-8 py-3 sm:py-0">
         {/* Search */}
         <div className="flex-1 w-full sm:max-w-lg">
           <div className="relative">
             <Search
               size={18}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
             />
             <Input
               type="text"
@@ -70,11 +70,11 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="relative"
+            className="relative text-gray-200 hover:text-white"
             aria-label="Notificaciones"
           >
-            <Bell size={20} className="text-gray-600" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-500 rounded-full ring-2 ring-white" />
+            <Bell size={20} />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary-400 ring-2 ring-gray-950" />
           </Button>
 
           {/* User menu */}
@@ -82,34 +82,34 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex items-center gap-2 sm:gap-3 p-1.5 h-auto"
+                className="flex items-center gap-2 sm:gap-3 p-1.5 h-auto text-gray-200 hover:text-white"
                 aria-label="Menú de usuario"
               >
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-primary-400 flex items-center justify-center shadow-md">
-                  <span className="text-white text-sm font-semibold">{initials}</span>
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 via-secondary-500 to-primary-300 flex items-center justify-center shadow-[0_0_20px_rgba(106,91,255,0.35)]">
+                  <span className="text-gray-950 text-sm font-semibold">{initials}</span>
                 </div>
                 <div className="hidden sm:block text-left">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-white">
                     {user.email?.split("@")[0]}
                   </p>
-                  <p className="text-xs text-gray-600">Administrador</p>
+                  <p className="text-xs text-gray-500">Administrador</p>
                 </div>
                 <ChevronDown
                   size={16}
                   className={cn(
-                    "hidden sm:block text-gray-400 transition-transform duration-200",
+                    "hidden sm:block text-gray-500 transition-transform duration-200",
                     isDropdownOpen && "rotate-180"
                   )}
                 />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuContent align="end" className="w-56 border-gray-800 bg-gray-900 text-gray-100">
               <DropdownMenuLabel>
                 <div>
-                  <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-sm font-medium text-white truncate">
                     {user.email}
                   </p>
-                  <p className="text-xs text-gray-600 mt-0.5">Administrador</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Administrador</p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -135,7 +135,7 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
               <DropdownMenuItem
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="text-error-600 focus:text-error-600 focus:bg-error-50"
+                className="text-error-400 focus:text-error-300 focus:bg-error-500/10"
               >
                 <LogOut size={16} className="mr-2" />
                 {isLoggingOut ? "Cerrando sesión..." : "Cerrar Sesión"}

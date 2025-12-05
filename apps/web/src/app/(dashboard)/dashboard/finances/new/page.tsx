@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
+import type { TransactionInsert, TransactionType } from "database/types";
 
 interface Patient {
   id: string;
@@ -43,7 +44,18 @@ export default function NewTransactionPage() {
   const [error, setError] = useState<string | null>(null);
   const [patients, setPatients] = useState<Patient[]>([]);
 
-  const [formData, setFormData] = useState({
+  type FormState = {
+    patient_id: string;
+    amount: string;
+    type: TransactionType;
+    category: string;
+    description: string;
+    payment_method: string;
+    reference_number: string;
+    transaction_date: string;
+  };
+
+  const [formData, setFormData] = useState<FormState>({
     patient_id: patientIdParam || "",
     amount: "",
     type: "income",
@@ -90,7 +102,7 @@ export default function NewTransactionPage() {
 
     try {
       const supabase = createClient();
-      const { error } = await supabase.from("transactions").insert({
+      const payload: TransactionInsert = {
         patient_id: formData.patient_id || null,
         amount: Number(formData.amount),
         type: formData.type,
@@ -99,7 +111,10 @@ export default function NewTransactionPage() {
         payment_method: formData.payment_method,
         reference_number: formData.reference_number || null,
         transaction_date: formData.transaction_date,
-      } as any); // Type assertion needed due to Supabase type inference limitations
+      };
+
+      // @ts-expect-error Supabase type inference mismatch
+      const { error } = await supabase.from("transactions").insert(payload);
 
       if (error) {
         setError(error.message);

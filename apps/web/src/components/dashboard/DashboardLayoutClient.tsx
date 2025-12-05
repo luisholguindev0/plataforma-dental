@@ -15,7 +15,7 @@ function DashboardContent({
   const { isCollapsed } = useSidebar();
 
   return (
-    <div className="min-h-screen bg-gray-50 dashboard">
+    <div className="dashboard min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(106,91,255,0.08),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(39,197,255,0.08),transparent_28%),linear-gradient(135deg,#05060a_0%,#0b0f18_100%)] text-gray-50">
       <DashboardSidebar />
       <div
         className={`transition-all duration-300 ${
@@ -23,7 +23,7 @@ function DashboardContent({
         }`}
       >
         <DashboardHeader user={user} />
-        <main className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8 max-w-full overflow-x-hidden">
+        <main className="max-w-full overflow-x-hidden px-4 py-6 sm:px-6 lg:px-8">
           {children}
         </main>
       </div>

@@ -1,69 +1,71 @@
 "use client";
 
-import { Star, MessageSquare, Quote } from "lucide-react";
+import { Star, MessageSquare, Quote, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const testimonials = [
   {
     name: "Ana María P.",
-    text: "Nunca imaginé que ir al dentista pudiera ser tan profesional y cómodo. El resultado es simplemente perfecto.",
+    text: "Nunca imaginé que ir al dentista pudiera ser tan cómodo. El diseño digital me permitió ver el resultado antes de empezar. El cambio es increíble.",
     rating: 5,
-    treatment: "Diseño de Sonrisa",
+    treatment: "Diseño de sonrisa",
   },
   {
     name: "Carlos R.",
-    text: "La tecnología que usa el Dr. Jhoiner es increíble. Pude ver cómo quedaría mi sonrisa antes de empezar.",
+    text: "Implantes guiados con precisión milimétrica. Sin dolor, sin incertidumbre, y una mordida que se siente natural. Gran acompañamiento.",
     rating: 5,
-    treatment: "Implantes",
+    treatment: "Implantes digitales",
   },
   {
     name: "Valentina M.",
-    text: "Atención impecable y resultados que superaron mis expectativas. Totalmente recomendado.",
+    text: "Blanqueamiento + carillas ultrafinas. El tono, la forma y la naturalidad quedaron perfectos. Súper profesional y humano.",
     rating: 5,
-    treatment: "Blanqueamiento",
+    treatment: "Estética avanzada",
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section id="testimonios" className="py-24 bg-gray-50">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600 mb-6">
-            <MessageSquare size={20} />
+    <section id="testimonios" className="relative py-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(39,197,255,0.08),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(106,91,255,0.08),transparent_30%)]" />
+      <div className="container relative mx-auto px-6">
+        <div className="text-center mb-14 space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary-500/40 bg-primary-500/10 px-4 py-2 text-sm text-primary-100">
+            <MessageSquare size={16} />
+            Pacientes reales
           </div>
-          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-gray-900 mb-4">
-            Lo Que Dicen Nuestros <span className="text-primary-600">Pacientes</span>
+          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-white">
+            Historias que inspiran <span className="text-primary-100">confianza</span>
           </h2>
-          <p className="text-lg text-gray-600">Testimonios reales de pacientes satisfechos.</p>
+          <p className="text-lg text-gray-300">
+            Experiencias medibles: precisión digital, tiempos cortos y resultados naturales.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="relative group hover:shadow-xl transition-all duration-300"
+              className="relative overflow-hidden border-gray-800/70 bg-gray-900/70 backdrop-blur shadow-[0_20px_70px_-50px_rgba(0,0,0,0.85)] transition-all duration-300 hover:-translate-y-1 hover:border-primary-500/40"
             >
-              <CardContent className="p-8">
-                <Quote className="absolute top-8 right-8 text-gray-100 w-12 h-12 group-hover:text-primary-100 transition-colors" />
-                
-                <div className="flex gap-1 mb-6">
+              <CardContent className="p-8 space-y-6">
+                <Quote className="absolute -left-1 -top-1 text-primary-500/15 w-16 h-16" />
+
+                <div className="flex gap-1">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={18} className="text-warning-500 fill-warning-500" />
+                    <Star key={i} size={16} className="text-warning-500 fill-warning-500" />
                   ))}
                 </div>
 
-                <p className="text-gray-700 mb-8 leading-relaxed relative z-10 text-base">
-                  "{testimonial.text}"
-                </p>
+                <p className="text-gray-200 leading-relaxed">“{testimonial.text}”</p>
 
-                <div className="flex items-center justify-between border-t border-gray-100 pt-6">
+                <div className="flex items-center justify-between border-t border-gray-800 pt-6">
                   <div>
-                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                    <p className="text-sm text-primary-600 mt-1">{testimonial.treatment}</p>
+                    <p className="font-semibold text-white">{testimonial.name}</p>
+                    <p className="text-sm text-primary-100 mt-1">{testimonial.treatment}</p>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-success-100 flex items-center justify-center">
-                    <div className="w-3 h-3 bg-success-500 rounded-full" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-500/20 text-primary-100">
+                    <Sparkles size={18} />
                   </div>
                 </div>
               </CardContent>

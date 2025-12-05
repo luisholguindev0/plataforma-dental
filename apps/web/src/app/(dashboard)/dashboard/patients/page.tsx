@@ -2,15 +2,9 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import {
   Plus,
-  Search,
-  Filter,
   Users,
   Phone,
   Mail,
-  MoreVertical,
-  Eye,
-  Edit,
-  Trash2,
 } from "lucide-react";
 import PatientFilters from "@/components/dashboard/patients/PatientFilters";
 import PatientActions from "@/components/dashboard/patients/PatientActions";
@@ -51,7 +45,10 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
     query = query.eq("qualification_status", params.status);
   }
 
-  const { data: patientsData, count } = await query;
+  const { data: patientsData, count, error: patientsError } = await query;
+  if (patientsError) {
+    console.error("Error fetching patients", patientsError.message);
+  }
   const patients = (patientsData || []) as Array<{
     id: string;
     full_name: string | null;
@@ -65,9 +62,9 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
   const totalPages = Math.ceil((count || 0) / perPage);
 
   const qualificationColors = {
-    qualified: "bg-green-100 text-green-700",
-    pending: "bg-amber-100 text-amber-700",
-    not_qualified: "bg-red-100 text-red-700",
+    qualified: "bg-success-600/20 text-success-100 border border-success-500/30",
+    pending: "bg-warning-600/15 text-warning-100 border border-warning-500/30",
+    not_qualified: "bg-error-600/15 text-error-100 border border-error-500/30",
   };
 
   const qualificationLabels = {
@@ -81,10 +78,10 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-primary-600">
+          <h1 className="text-2xl font-serif font-bold bg-gradient-to-r from-primary-200 to-secondary-200 bg-clip-text text-transparent">
             Pacientes
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Gestiona tu base de datos de pacientes y clientes potenciales.
           </p>
         </div>
@@ -100,51 +97,51 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
       <PatientFilters />
 
       {/* Patients table/list */}
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div className="rounded-2xl border border-gray-800 bg-gray-900/70 text-gray-100 shadow-[0_30px_70px_-50px_rgba(0,0,0,0.85)] overflow-hidden">
         {/* Desktop table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+              <tr className="bg-gray-950/50 border-b border-gray-800">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Paciente
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Contacto
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Estado
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Score
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-400">
                   Fecha
                 </th>
-                <th className="text-right px-6 py-4 text-sm font-semibold text-gray-600">
+                <th className="text-right px-6 py-4 text-sm font-semibold text-gray-400">
                   Acciones
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-800">
               {patients && patients.length > 0 ? (
                 patients.map((patient) => (
                   <tr
                     key={patient.id}
-                    className="hover:bg-gray-50 transition-colors"
+                    className="hover:bg-gray-900 transition-colors"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary-500/10 flex items-center justify-center font-semibold text-primary-600">
+                        <div className="w-10 h-10 rounded-full bg-primary-500/15 flex items-center justify-center font-semibold text-primary-100">
                           {patient.full_name
                             ? patient.full_name.slice(0, 2).toUpperCase()
                             : patient.whatsapp_number?.slice(-2) || "??"}
                         </div>
                         <div>
-                          <p className="font-medium text-gray-800">
+                          <p className="font-medium text-white">
                             {patient.full_name || "Sin nombre"}
                           </p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-gray-400">
                             {patient.preferred_service || "Sin servicio"}
                           </p>
                         </div>
@@ -152,12 +149,12 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
                     </td>
                     <td className="px-6 py-4">
                       <div className="space-y-1">
-                        <p className="flex items-center gap-2 text-sm text-gray-600">
+                        <p className="flex items-center gap-2 text-sm text-gray-300">
                           <Phone size={14} />
                           {patient.whatsapp_number}
                         </p>
                         {patient.email && (
-                          <p className="flex items-center gap-2 text-sm text-gray-500">
+                          <p className="flex items-center gap-2 text-sm text-gray-400">
                             <Mail size={14} />
                             {patient.email}
                           </p>
@@ -187,18 +184,18 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
                               key={i}
                               className={`w-2 h-6 rounded-sm ${
                                 i <= (patient.qualification_score || 0)
-                                  ? "bg-primary-500"
-                                  : "bg-gray-200"
+                                  ? "bg-primary-400"
+                                  : "bg-gray-800"
                               }`}
                             />
                           ))}
                         </div>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-300">
                           {patient.qualification_score}/4
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-gray-400">
                       {new Date(patient.created_at).toLocaleDateString("es-CO", {
                         day: "numeric",
                         month: "short",
@@ -213,16 +210,11 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
               ) : (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center">
-                    <Users
-                      size={48}
-                      className="mx-auto text-gray-300 mb-3"
-                    />
-                    <p className="text-gray-500">
-                      No se encontraron pacientes
-                    </p>
+                    <Users size={48} className="mx-auto text-gray-700 mb-3" />
+                    <p className="text-gray-400">No se encontraron pacientes</p>
                     <Link
                       href="/dashboard/patients/new"
-                      className="text-primary-600 hover:text-primary-700 font-medium text-sm mt-2 inline-block"
+                      className="text-primary-100 hover:text-white font-medium text-sm mt-2 inline-block"
                     >
                       Agregar primer paciente →
                     </Link>
@@ -234,22 +226,22 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
         </div>
 
         {/* Mobile cards */}
-        <div className="md:hidden divide-y divide-gray-100">
+        <div className="md:hidden divide-y divide-gray-800">
           {patients && patients.length > 0 ? (
             patients.map((patient) => (
               <div key={patient.id} className="p-4">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-primary-500/10 flex items-center justify-center font-semibold text-primary-600">
+                    <div className="w-12 h-12 rounded-full bg-primary-500/15 flex items-center justify-center font-semibold text-primary-100">
                       {patient.full_name
                         ? patient.full_name.slice(0, 2).toUpperCase()
                         : patient.whatsapp_number?.slice(-2) || "??"}
                     </div>
                     <div>
-                      <p className="font-medium text-gray-800">
+                      <p className="font-medium text-white">
                         {patient.full_name || "Sin nombre"}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-400">
                         {patient.whatsapp_number}
                       </p>
                     </div>
@@ -276,19 +268,19 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
                           key={i}
                           className={`w-1.5 h-4 rounded-sm ${
                             i <= (patient.qualification_score || 0)
-                              ? "bg-primary-500"
-                              : "bg-gray-200"
+                              ? "bg-primary-400"
+                              : "bg-gray-800"
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-400">
                       Score: {patient.qualification_score}/4
                     </span>
                   </div>
                   <Link
                     href={`/dashboard/patients/${patient.id}`}
-                    className="text-sm text-primary-600 font-medium"
+                    className="text-sm text-primary-100 font-medium"
                   >
                     Ver detalles →
                   </Link>
@@ -299,9 +291,9 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
             <div className="p-8 text-center">
               <Users
                 size={48}
-                className="mx-auto text-gray-300 mb-3"
+                className="mx-auto text-gray-700 mb-3"
               />
-              <p className="text-gray-500">
+              <p className="text-gray-400">
                 No se encontraron pacientes
               </p>
             </div>
@@ -310,8 +302,8 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-            <p className="text-sm text-gray-600">
+          <div className="px-6 py-4 border-t border-gray-800 flex items-center justify-between text-gray-300">
+            <p className="text-sm">
               Mostrando {offset + 1} - {Math.min(offset + perPage, count || 0)} de{" "}
               {count} pacientes
             </p>
@@ -321,7 +313,7 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
                   href={`/dashboard/patients?page=${page - 1}${
                     params.search ? `&search=${params.search}` : ""
                   }${params.status ? `&status=${params.status}` : ""}`}
-                  className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-gray-100 border border-gray-800 rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   Anterior
                 </Link>
@@ -331,7 +323,7 @@ export default async function PatientsPage({ searchParams }: PatientsPageProps) 
                   href={`/dashboard/patients?page=${page + 1}${
                     params.search ? `&search=${params.search}` : ""
                   }${params.status ? `&status=${params.status}` : ""}`}
-                  className="px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-gray-950 bg-primary-500 rounded-lg hover:bg-primary-400 transition-colors"
                 >
                   Siguiente
                 </Link>

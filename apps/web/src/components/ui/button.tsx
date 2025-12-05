@@ -4,26 +4,26 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60 disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-primary-500 to-primary-400 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0",
+          "bg-gradient-to-r from-primary-500 via-primary-400 to-secondary-500 text-gray-950 shadow-[0_10px_40px_-12px_rgba(106,91,255,0.55)] hover:scale-[1.01] hover:shadow-[0_18px_50px_-18px_rgba(39,197,255,0.55)] active:translate-y-[1px]",
         destructive:
-          "bg-error-500 text-white shadow-md hover:bg-error-600 hover:shadow-lg active:bg-error-700",
+          "bg-error-600 text-white shadow-sm hover:bg-error-500 hover:shadow-[0_14px_30px_-16px_rgba(239,68,68,0.5)] active:bg-error-700",
         outline:
-          "border-2 border-primary-500 bg-transparent text-primary-600 hover:bg-primary-50 hover:text-primary-700 active:bg-primary-100",
+          "border border-primary-500/70 bg-primary-500/10 text-primary-100 hover:bg-primary-500/16 hover:border-primary-400 active:border-primary-300",
         secondary:
-          "bg-gray-100 text-gray-900 border border-gray-200 hover:bg-gray-200 active:bg-gray-300",
+          "bg-gray-800 text-gray-50 border border-gray-700 shadow-sm hover:bg-gray-700 hover:border-gray-600 active:bg-gray-800/90",
         ghost:
-          "hover:bg-gray-100 hover:text-primary-600 active:bg-gray-200 text-gray-700",
-        link: "text-primary-600 underline-offset-4 hover:underline hover:text-primary-700",
+          "text-gray-200 hover:bg-gray-800 hover:text-white active:bg-gray-700",
+        link: "text-primary-200 underline-offset-4 hover:text-primary-100 hover:underline",
       },
       size: {
         default: "h-11 min-h-[44px] px-6 py-2.5",
-        sm: "h-9 min-h-[44px] rounded-md px-4 text-xs",
-        lg: "h-12 min-h-[44px] rounded-lg px-8 text-base",
+        sm: "h-9 min-h-[40px] rounded-md px-4 text-xs",
+        lg: "h-12 min-h-[48px] rounded-xl px-8 text-base",
         icon: "h-11 w-11 min-h-[44px] min-w-[44px]",
       },
     },
