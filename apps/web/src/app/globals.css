@@ -3,12 +3,12 @@
 /* ============================================
    TAILWIND V4 CONTENT PATHS
    Especificar qué archivos escanear para clases
-   Rutas relativas desde src/app/globals.css
+   Tailwind V4 escanea automáticamente, pero podemos especificar rutas adicionales
    ============================================ */
-@source "../**/*.{js,ts,jsx,tsx,mdx}";
-@source "../../components/**/*.{js,ts,jsx,tsx,mdx}";
-@source "../../lib/**/*.{js,ts,jsx,tsx,mdx}";
-@source "../../app/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../app/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../components/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../lib/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../contexts/**/*.{js,ts,jsx,tsx,mdx}";
 
 /* ============================================
    TAILWIND V4 THEME CONFIGURATION
