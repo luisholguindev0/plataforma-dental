@@ -1,11 +1,12 @@
 "use client";
 
 import { Star, MessageSquare, Quote } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const testimonials = [
   {
     name: "Ana María P.",
-    text: "Nunca imaginé que ir al dentista pudiera sentirse como viajar al futuro. El resultado es simplemente perfecto.",
+    text: "Nunca imaginé que ir al dentista pudiera ser tan profesional y cómodo. El resultado es simplemente perfecto.",
     rating: 5,
     treatment: "Diseño de Sonrisa",
   },
@@ -25,47 +26,48 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonios" className="section-lg relative overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/5 to-transparent" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="testimonios" className="py-24 bg-gray-50">
+      <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-cyan-900/30 text-cyan-400 mb-6 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600 mb-6">
             <MessageSquare size={20} />
           </div>
-          <h2 className="text-4xl font-bold text-white mb-4">Registro de Usuarios</h2>
-          <p className="text-gray-400">Datos confirmados de pacientes satisfechos.</p>
+          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-gray-900 mb-4">
+            Lo Que Dicen Nuestros <span className="text-primary-600">Pacientes</span>
+          </h2>
+          <p className="text-lg text-gray-600">Testimonios reales de pacientes satisfechos.</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <div
+            <Card
               key={index}
-              className="glass-card p-8 rounded-2xl relative group"
+              className="relative group hover:shadow-xl transition-all duration-300"
             >
-              <Quote className="absolute top-8 right-8 text-white/5 w-12 h-12 group-hover:text-cyan-500/10 transition-colors" />
-              
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />
-                ))}
-              </div>
-
-              <p className="text-gray-300 mb-8 leading-relaxed relative z-10">
-                "{testimonial.text}"
-              </p>
-
-              <div className="flex items-center justify-between border-t border-white/5 pt-6">
-                <div>
-                  <p className="font-bold text-white">{testimonial.name}</p>
-                  <p className="text-xs text-cyan-400 uppercase tracking-wider mt-1">{testimonial.treatment}</p>
+              <CardContent className="p-8">
+                <Quote className="absolute top-8 right-8 text-gray-100 w-12 h-12 group-hover:text-primary-100 transition-colors" />
+                
+                <div className="flex gap-1 mb-6">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} size={18} className="text-warning-500 fill-warning-500" />
+                  ))}
                 </div>
-                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-green-400 rounded-full shadow-[0_0_5px_#4ade80]" />
+
+                <p className="text-gray-700 mb-8 leading-relaxed relative z-10 text-base">
+                  "{testimonial.text}"
+                </p>
+
+                <div className="flex items-center justify-between border-t border-gray-100 pt-6">
+                  <div>
+                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                    <p className="text-sm text-primary-600 mt-1">{testimonial.treatment}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-success-100 flex items-center justify-center">
+                    <div className="w-3 h-3 bg-success-500 rounded-full" />
+                  </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

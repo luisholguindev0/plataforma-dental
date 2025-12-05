@@ -15,7 +15,7 @@ function DashboardContent({
   const { isCollapsed } = useSidebar();
 
   return (
-    <div className="min-h-screen bg-[var(--color-gray-50)] dashboard">
+    <div className="min-h-screen bg-gray-50 dashboard">
       <DashboardSidebar />
       <div
         className={`transition-all duration-300 ${

@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, Filter } from "lucide-react";
 import { useState, useTransition } from "react";
+import { Input } from "@/components/ui/input";
 
 export default function PatientFilters() {
   const router = useRouter();
@@ -43,29 +44,29 @@ export default function PatientFilters() {
       <div className="relative flex-1">
         <Search
           size={20}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-gray-400)]"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none"
         />
-        <input
+        <Input
           type="text"
           placeholder="Buscar por nombre, teléfono o email..."
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-[var(--color-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
+          className="pl-10"
         />
         {isPending && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <div className="w-4 h-4 border-2 border-[var(--color-accent)] border-t-transparent rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-primary-500 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
       </div>
 
       {/* Status filter */}
       <div className="flex items-center gap-2">
-        <Filter size={20} className="text-[var(--color-gray-400)]" />
+        <Filter size={20} className="text-gray-400" />
         <select
           value={searchParams.get("status") || "all"}
           onChange={(e) => handleStatusFilter(e.target.value)}
-          className="px-4 py-2.5 bg-white border border-[var(--color-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
+          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
         >
           <option value="all">Todos los estados</option>
           <option value="qualified">Calificados</option>
@@ -76,4 +77,3 @@ export default function PatientFilters() {
     </div>
   );
 }
-

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Download, Trash2, Eye } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 interface DocumentActionsProps {
   document: {
@@ -103,28 +104,33 @@ export default function DocumentActions({ document }: DocumentActionsProps) {
 
   return (
     <div className="flex gap-2">
-      <button
+      <Button
+        variant="outline"
+        size="sm"
         onClick={handleView}
-        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-[var(--color-gray-600)] bg-white rounded-lg hover:bg-[var(--color-gray-50)] transition-colors border border-[var(--color-gray-200)]"
+        className="flex-1 text-xs"
       >
         <Eye size={14} />
         Ver
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
         onClick={handleDownload}
-        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-[var(--color-primary)] bg-white rounded-lg hover:bg-[var(--color-primary)]/5 transition-colors border border-[var(--color-gray-200)]"
+        className="flex-1 text-xs text-primary-600 hover:text-primary-700"
       >
         <Download size={14} />
         Descargar
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
         onClick={handleDelete}
         disabled={isDeleting}
-        className="p-2 text-red-500 bg-white rounded-lg hover:bg-red-50 transition-colors border border-[var(--color-gray-200)] disabled:opacity-50"
+        className="text-error-600 hover:text-error-700 hover:bg-error-50"
       >
         <Trash2 size={14} />
-      </button>
+      </Button>
     </div>
   );
 }
-

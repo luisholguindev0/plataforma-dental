@@ -1,130 +1,131 @@
 "use client";
 
-import { Sparkles, Smile, RefreshCw, ArrowRight, Check, Cpu, Scan, Zap } from "lucide-react";
+import { Sparkles, Smile, RefreshCw, ArrowRight, Check, Scan, Zap } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const services = [
   {
     id: "estetica-dental",
     icon: Sparkles,
-    title: "Estética Cuántica",
+    title: "Estética Dental",
     description:
-      "Optimización visual de la sonrisa mediante nanotecnología y materiales de última generación.",
+      "Blanqueamiento profesional, carillas cerámicas y tratamientos estéticos para una sonrisa radiante.",
     features: [
-      "Blanqueamiento Fotónico",
-      "Carillas de Grafeno/Cerámica",
-      "Micro-contorneado Láser",
-      "Restauraciones Biomiméticas",
+      "Blanqueamiento Dental",
+      "Carillas Cerámicas",
+      "Contorneado Estético",
+      "Restauraciones Estéticas",
     ],
-    color: "text-cyan-400",
-    bgColor: "bg-cyan-900/20",
-    borderColor: "border-cyan-500/30",
+    color: "text-primary-600",
+    bgColor: "bg-primary-50",
+    borderColor: "border-primary-200",
   },
   {
     id: "diseno-sonrisa",
     icon: Scan,
-    title: "Arquitectura Digital",
+    title: "Diseño de Sonrisa",
     description:
-      "Modelado 3D y simulación predictiva para una sonrisa matemáticamente perfecta.",
+      "Planificación digital y diseño personalizado para lograr la sonrisa de tus sueños.",
     features: [
-      "Escaneo Intraoral 4D",
-      "Prototipado Virtual",
-      "Bio-integración Facial",
-      "Previsualización Holística",
+      "Diseño Digital 3D",
+      "Simulación Virtual",
+      "Plan de Tratamiento",
+      "Previsualización",
     ],
-    color: "text-purple-400",
-    bgColor: "bg-purple-900/20",
-    borderColor: "border-purple-500/30",
+    color: "text-primary-600",
+    bgColor: "bg-primary-50",
+    borderColor: "border-primary-200",
     featured: true,
   },
   {
     id: "rehabilitacion-oral",
-    icon: Cpu,
-    title: "Bio-Rehabilitación",
+    icon: RefreshCw,
+    title: "Rehabilitación Oral",
     description:
-      "Restauración funcional de sistemas orales complejos mediante ingeniería de tejidos y prótesis avanzadas.",
+      "Restauraciones completas con implantes, prótesis y tratamientos de alta calidad.",
     features: [
-      "Implantes de Titanio/Zirconio",
-      "Prótesis Híbridas",
-      "Regeneración Tisular",
-      "Sistemas de Anclaje",
+      "Implantes Dentales",
+      "Prótesis Fijas",
+      "Coronas y Puentes",
+      "Rehabilitación Completa",
     ],
-    color: "text-emerald-400",
-    bgColor: "bg-emerald-900/20",
-    borderColor: "border-emerald-500/30",
+    color: "text-primary-600",
+    bgColor: "bg-primary-50",
+    borderColor: "border-primary-200",
   },
 ];
 
 export default function Services() {
   return (
-    <section id="servicios" className="section-lg relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="servicios" className="py-24 bg-white">
+      <div className="container mx-auto px-6">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <span className="inline-block text-cyan-400 font-mono text-xs uppercase tracking-[0.3em] mb-4 animate-pulse">
-            Protocolos Disponibles
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="inline-block text-primary-600 font-semibold text-sm uppercase tracking-wider mb-4">
+            Nuestros Servicios
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            Sistemas de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Mejora Humana</span>
+          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-gray-900 mb-6">
+            Servicios de <span className="text-primary-600">Excelencia</span>
           </h2>
-          <p className="text-lg text-gray-400">
-            Intervenciones de alta precisión para la actualización estética y funcional de su interfaz biológica.
+          <p className="text-lg text-gray-600">
+            Ofrecemos tratamientos de vanguardia con tecnología avanzada y un enfoque personalizado para cada paciente.
           </p>
         </div>
 
         {/* Services grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div
+          {services.map((service) => (
+            <Card
               key={service.id}
-              className={`group relative glass-card rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 ${
-                service.featured ? "border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.15)]" : "border-white/5"
+              className={`group hover:shadow-xl transition-all duration-300 ${
+                service.featured ? "border-primary-300 border-2" : ""
               }`}
             >
               {service.featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-900 text-cyan-300 border border-cyan-500/50 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(34,211,238,0.4)]">
-                  Sistema Central
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                  Más Popular
                 </div>
               )}
 
-              {/* Icon */}
-              <div
-                className={`w-16 h-16 rounded-2xl ${service.bgColor} border ${service.borderColor} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 relative overflow-hidden`}
-              >
-                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <service.icon size={32} className={service.color} />
-              </div>
+              <CardHeader>
+                <div className={`w-16 h-16 ${service.bgColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <service.icon size={32} className={service.color} />
+                </div>
+                <CardTitle className="text-2xl text-gray-900">{service.title}</CardTitle>
+                <CardDescription className="text-base text-gray-600 mt-2">
+                  {service.description}
+                </CardDescription>
+              </CardHeader>
 
-              {/* Content */}
-              <h3 className={`text-2xl font-bold mb-4 ${service.featured ? "text-white" : "text-gray-200"}`}>
-                {service.title}
-              </h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                {service.description}
-              </p>
+              <CardContent className="space-y-6">
+                {/* Features */}
+                <ul className="space-y-3">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-3 text-gray-700">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500" />
+                      <span className="text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
 
-              {/* Features */}
-              <ul className="space-y-4 mb-8">
-                {service.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-gray-300">
-                    <div className={`w-1.5 h-1.5 rounded-full ${service.color.replace('text', 'bg')} shadow-[0_0_8px_currentColor]`} />
-                    <span className="text-sm tracking-wide">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Iniciar protocolo: ${service.title}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2 font-bold text-sm uppercase tracking-wider ${service.color} hover:gap-4 transition-all duration-300`}
-              >
-                Inicializar
-                <ArrowRight size={16} />
-              </a>
-            </div>
+                {/* CTA */}
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full group/btn"
+                >
+                  <a
+                    href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Me interesa el servicio: ${service.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Consultar
+                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

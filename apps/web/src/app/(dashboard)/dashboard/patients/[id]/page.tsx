@@ -15,6 +15,7 @@ import {
   XCircle,
   Clock,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface PatientDetailPageProps {
   params: Promise<{ id: string }>;
@@ -112,9 +113,9 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
     .reduce((sum, t) => sum + Number(t.amount), 0);
 
   const qualificationColors = {
-    qualified: "bg-green-100 text-green-700 border-green-200",
-    pending: "bg-amber-100 text-amber-700 border-amber-200",
-    not_qualified: "bg-red-100 text-red-700 border-red-200",
+    qualified: "bg-success-100 text-success-700 border-success-200",
+    pending: "bg-warning-100 text-warning-700 border-warning-200",
+    not_qualified: "bg-error-100 text-error-700 border-error-200",
   };
 
   const qualificationLabels = {
@@ -138,44 +139,48 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
         <div>
           <Link
             href="/dashboard/patients"
-            className="inline-flex items-center gap-2 text-[var(--color-gray-600)] hover:text-[var(--color-primary)] mb-4"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-primary-600 mb-4"
           >
             <ArrowLeft size={20} />
             Volver a pacientes
           </Link>
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center font-bold text-2xl text-[var(--color-primary)]">
+            <div className="w-16 h-16 rounded-2xl bg-primary-500/10 flex items-center justify-center font-bold text-2xl text-primary-600">
               {patient.full_name
                 ? patient.full_name.slice(0, 2).toUpperCase()
                 : patient.whatsapp_number?.slice(-2) || "??"}
             </div>
             <div>
-              <h1 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
+              <h1 className="text-2xl font-serif font-bold text-primary-600">
                 {patient.full_name || "Sin nombre"}
               </h1>
-              <p className="text-[var(--color-gray-600)]">
+              <p className="text-gray-600">
                 {patient.whatsapp_number}
               </p>
             </div>
           </div>
         </div>
         <div className="flex gap-3">
-          <a
-            href={`https://wa.me/${patient.whatsapp_number}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-whatsapp"
+          <Button
+            asChild
+            variant="secondary"
+            className="bg-green-600 hover:bg-green-700 text-white"
           >
-            <MessageSquare size={18} />
-            WhatsApp
-          </a>
-          <Link
-            href={`/dashboard/patients/${id}/edit`}
-            className="btn btn-outline"
-          >
-            <Edit size={18} />
-            Editar
-          </Link>
+            <a
+              href={`https://wa.me/${patient.whatsapp_number}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageSquare size={18} />
+              WhatsApp
+            </a>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href={`/dashboard/patients/${id}/edit`}>
+              <Edit size={18} />
+              Editar
+            </Link>
+          </Button>
         </div>
       </div>
 
@@ -184,33 +189,33 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
         <div className="lg:col-span-2 space-y-6">
           {/* Contact info */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-gray-800)] mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Información de Contacto
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-gray-50)]">
-                <Phone size={20} className="text-[var(--color-gray-400)]" />
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
+                <Phone size={20} className="text-gray-400" />
                 <div>
-                  <p className="text-xs text-[var(--color-gray-500)]">Teléfono</p>
-                  <p className="font-medium text-[var(--color-gray-800)]">
+                  <p className="text-xs text-gray-500">Teléfono</p>
+                  <p className="font-medium text-gray-800">
                     {patient.whatsapp_number}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-gray-50)]">
-                <Mail size={20} className="text-[var(--color-gray-400)]" />
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
+                <Mail size={20} className="text-gray-400" />
                 <div>
-                  <p className="text-xs text-[var(--color-gray-500)]">Email</p>
-                  <p className="font-medium text-[var(--color-gray-800)]">
+                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="font-medium text-gray-800">
                     {patient.email || "No registrado"}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-gray-50)] sm:col-span-2">
-                <MapPin size={20} className="text-[var(--color-gray-400)]" />
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 sm:col-span-2">
+                <MapPin size={20} className="text-gray-400" />
                 <div>
-                  <p className="text-xs text-[var(--color-gray-500)]">Dirección</p>
-                  <p className="font-medium text-[var(--color-gray-800)]">
+                  <p className="text-xs text-gray-500">Dirección</p>
+                  <p className="font-medium text-gray-800">
                     {patient.address || "No registrada"}
                   </p>
                 </div>
@@ -218,11 +223,11 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
             </div>
 
             {patient.notes && (
-              <div className="mt-4 p-4 rounded-xl bg-[var(--color-gray-50)]">
-                <p className="text-sm font-medium text-[var(--color-gray-600)] mb-1">
+              <div className="mt-4 p-4 rounded-xl bg-gray-50">
+                <p className="text-sm font-medium text-gray-600 mb-1">
                   Notas
                 </p>
-                <p className="text-[var(--color-gray-800)]">{patient.notes}</p>
+                <p className="text-gray-800">{patient.notes}</p>
               </div>
             )}
           </div>
@@ -230,12 +235,12 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
           {/* Appointments */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[var(--color-gray-800)]">
+              <h2 className="text-lg font-semibold text-gray-800">
                 Citas
               </h2>
               <Link
                 href={`/dashboard/appointments/new?patient=${id}`}
-                className="text-sm text-[var(--color-accent)] font-medium hover:text-[var(--color-accent-dark)]"
+                className="text-sm text-primary-600 font-medium hover:text-primary-700"
               >
                 + Nueva cita
               </Link>
@@ -245,19 +250,19 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                 {appointments.map((apt) => (
                   <div
                     key={apt.id}
-                    className="flex items-center justify-between p-3 rounded-xl bg-[var(--color-gray-50)]"
+                    className="flex items-center justify-between p-3 rounded-xl bg-gray-50"
                   >
                     <div className="flex items-center gap-3">
-                      <Calendar size={18} className="text-[var(--color-gray-400)]" />
+                      <Calendar size={18} className="text-gray-400" />
                       <div>
-                        <p className="font-medium text-[var(--color-gray-800)]">
+                        <p className="font-medium text-gray-800">
                           {new Date(apt.appointment_date).toLocaleDateString("es-CO", {
                             weekday: "long",
                             day: "numeric",
                             month: "long",
                           })}
                         </p>
-                        <p className="text-sm text-[var(--color-gray-500)]">
+                        <p className="text-sm text-gray-500">
                           {apt.appointment_time?.slice(0, 5)} -{" "}
                           {serviceLabels[apt.service_type] || apt.service_type}
                         </p>
@@ -268,9 +273,9 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                         apt.status === "completed"
                           ? "bg-gray-100 text-gray-600"
                           : apt.status === "confirmed"
-                          ? "bg-green-100 text-green-700"
+                          ? "bg-success-100 text-success-700"
                           : apt.status === "cancelled"
-                          ? "bg-red-100 text-red-700"
+                          ? "bg-error-100 text-error-700"
                           : "bg-blue-100 text-blue-700"
                       }`}
                     >
@@ -286,7 +291,7 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                 ))}
               </div>
             ) : (
-              <p className="text-[var(--color-gray-500)] text-center py-4">
+              <p className="text-gray-500 text-center py-4">
                 No hay citas registradas
               </p>
             )}
@@ -295,12 +300,12 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
           {/* Transactions */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[var(--color-gray-800)]">
+              <h2 className="text-lg font-semibold text-gray-800">
                 Transacciones
               </h2>
               <Link
                 href={`/dashboard/finances/new?patient=${id}`}
-                className="text-sm text-[var(--color-accent)] font-medium hover:text-[var(--color-accent-dark)]"
+                className="text-sm text-primary-600 font-medium hover:text-primary-700"
               >
                 + Nueva transacción
               </Link>
@@ -310,29 +315,29 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                 {transactions.map((trx) => (
                   <div
                     key={trx.id}
-                    className="flex items-center justify-between p-3 rounded-xl bg-[var(--color-gray-50)]"
+                    className="flex items-center justify-between p-3 rounded-xl bg-gray-50"
                   >
                     <div className="flex items-center gap-3">
                       <DollarSign
                         size={18}
                         className={
                           trx.type === "income"
-                            ? "text-green-500"
-                            : "text-red-500"
+                            ? "text-success-500"
+                            : "text-error-500"
                         }
                       />
                       <div>
-                        <p className="font-medium text-[var(--color-gray-800)]">
+                        <p className="font-medium text-gray-800">
                           {trx.description || trx.category || "Transacción"}
                         </p>
-                        <p className="text-sm text-[var(--color-gray-500)]">
+                        <p className="text-sm text-gray-500">
                           {new Date(trx.transaction_date).toLocaleDateString("es-CO")}
                         </p>
                       </div>
                     </div>
                     <span
                       className={`font-semibold ${
-                        trx.type === "income" ? "text-green-600" : "text-red-600"
+                        trx.type === "income" ? "text-success-600" : "text-error-600"
                       }`}
                     >
                       {trx.type === "income" ? "+" : "-"}$
@@ -342,7 +347,7 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                 ))}
               </div>
             ) : (
-              <p className="text-[var(--color-gray-500)] text-center py-4">
+              <p className="text-gray-500 text-center py-4">
                 No hay transacciones registradas
               </p>
             )}
@@ -353,7 +358,7 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
         <div className="space-y-6">
           {/* Qualification status */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-gray-800)] mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Estado de Calificación
             </h2>
             <div
@@ -376,42 +381,42 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
             </div>
 
             <div className="mt-4 space-y-3">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-gray-50)]">
-                <span className="text-sm text-[var(--color-gray-600)]">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                <span className="text-sm text-gray-600">
                   Tiene presupuesto
                 </span>
                 {patient.has_budget ? (
-                  <CheckCircle size={18} className="text-green-500" />
+                  <CheckCircle size={18} className="text-success-500" />
                 ) : (
-                  <XCircle size={18} className="text-[var(--color-gray-300)]" />
+                  <XCircle size={18} className="text-gray-300" />
                 )}
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-gray-50)]">
-                <span className="text-sm text-[var(--color-gray-600)]">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                <span className="text-sm text-gray-600">
                   Tiene urgencia
                 </span>
                 {patient.has_urgency ? (
-                  <CheckCircle size={18} className="text-green-500" />
+                  <CheckCircle size={18} className="text-success-500" />
                 ) : (
-                  <XCircle size={18} className="text-[var(--color-gray-300)]" />
+                  <XCircle size={18} className="text-gray-300" />
                 )}
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-gray-50)]">
-                <span className="text-sm text-[var(--color-gray-600)]">Es local</span>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                <span className="text-sm text-gray-600">Es local</span>
                 {patient.is_local ? (
-                  <CheckCircle size={18} className="text-green-500" />
+                  <CheckCircle size={18} className="text-success-500" />
                 ) : (
-                  <XCircle size={18} className="text-[var(--color-gray-300)]" />
+                  <XCircle size={18} className="text-gray-300" />
                 )}
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--color-gray-50)]">
-                <span className="text-sm text-[var(--color-gray-600)]">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                <span className="text-sm text-gray-600">
                   Interesado en cita
                 </span>
                 {patient.interested_in_appointment ? (
-                  <CheckCircle size={18} className="text-green-500" />
+                  <CheckCircle size={18} className="text-success-500" />
                 ) : (
-                  <XCircle size={18} className="text-[var(--color-gray-300)]" />
+                  <XCircle size={18} className="text-gray-300" />
                 )}
               </div>
             </div>
@@ -419,11 +424,11 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
 
           {/* Service interest */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-gray-800)] mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Servicio de Interés
             </h2>
-            <div className="p-4 rounded-xl bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/20">
-              <p className="font-medium text-[var(--color-accent-dark)]">
+            <div className="p-4 rounded-xl bg-primary-500/10 border border-primary-500/20">
+              <p className="font-medium text-primary-700">
                 {patient.preferred_service
                   ? serviceLabels[patient.preferred_service]
                   : "No especificado"}
@@ -433,7 +438,7 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
 
           {/* Financial summary */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-gray-800)] mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Resumen Financiero
             </h2>
             <div className="p-4 rounded-xl bg-green-50 border border-green-100">
@@ -447,12 +452,12 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
           {/* Documents */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[var(--color-gray-800)]">
+              <h2 className="text-lg font-semibold text-gray-800">
                 Documentos
               </h2>
               <Link
                 href={`/dashboard/documents?patient=${id}`}
-                className="text-sm text-[var(--color-accent)] font-medium hover:text-[var(--color-accent-dark)]"
+                className="text-sm text-primary-600 font-medium hover:text-primary-700"
               >
                 Ver todos
               </Link>
@@ -462,17 +467,17 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                 {documents.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-[var(--color-gray-50)]"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50"
                   >
-                    <FileText size={18} className="text-[var(--color-gray-400)]" />
-                    <span className="text-sm text-[var(--color-gray-700)] truncate">
+                    <FileText size={18} className="text-gray-400" />
+                    <span className="text-sm text-gray-700 truncate">
                       {doc.file_name}
                     </span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-[var(--color-gray-500)] text-sm text-center py-2">
+              <p className="text-gray-500 text-sm text-center py-2">
                 Sin documentos
               </p>
             )}
@@ -480,15 +485,15 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
 
           {/* Dates */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-gray-800)] mb-4">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Fechas
             </h2>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <Clock size={16} className="text-[var(--color-gray-400)]" />
+                <Clock size={16} className="text-gray-400" />
                 <div>
-                  <p className="text-xs text-[var(--color-gray-500)]">Registrado</p>
-                  <p className="text-sm text-[var(--color-gray-700)]">
+                  <p className="text-xs text-gray-500">Registrado</p>
+                  <p className="text-sm text-gray-700">
                     {new Date(patient.created_at).toLocaleDateString("es-CO", {
                       day: "numeric",
                       month: "long",
@@ -498,12 +503,12 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Clock size={16} className="text-[var(--color-gray-400)]" />
+                <Clock size={16} className="text-gray-400" />
                 <div>
-                  <p className="text-xs text-[var(--color-gray-500)]">
+                  <p className="text-xs text-gray-500">
                     Último contacto
                   </p>
-                  <p className="text-sm text-[var(--color-gray-700)]">
+                  <p className="text-sm text-gray-700">
                     {new Date(patient.last_contact_at).toLocaleDateString("es-CO", {
                       day: "numeric",
                       month: "long",

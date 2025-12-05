@@ -9,6 +9,7 @@ import {
   User,
 } from "lucide-react";
 import AppointmentCalendar from "@/components/dashboard/appointments/AppointmentCalendar";
+import { Button } from "@/components/ui/button";
 
 interface AppointmentsPageProps {
   searchParams: Promise<{
@@ -108,17 +109,19 @@ export default async function AppointmentsPage({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
+          <h1 className="text-2xl font-serif font-bold text-primary-600">
             Citas
           </h1>
-          <p className="text-[var(--color-gray-600)]">
+          <p className="text-gray-600">
             Gestiona y organiza las citas con tus pacientes.
           </p>
         </div>
-        <Link href="/dashboard/appointments/new" className="btn btn-primary inline-flex">
-          <Plus size={20} />
-          Nueva Cita
-        </Link>
+        <Button asChild>
+          <Link href="/dashboard/appointments/new">
+            <Plus size={20} />
+            Nueva Cita
+          </Link>
+        </Button>
       </div>
 
       <div className="grid lg:grid-cols-4 gap-6">
@@ -134,11 +137,11 @@ export default async function AppointmentsPage({
         {/* Sidebar - Today's appointments */}
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-[var(--color-gray-800)] mb-4 flex items-center gap-2">
-              <CalendarIcon size={20} className="text-[var(--color-accent)]" />
+            <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <CalendarIcon size={20} className="text-primary-600" />
               Hoy
             </h2>
-            <p className="text-sm text-[var(--color-gray-500)] mb-4">
+            <p className="text-sm text-gray-500 mb-4">
               {new Date().toLocaleDateString("es-CO", {
                 weekday: "long",
                 day: "numeric",
@@ -151,7 +154,7 @@ export default async function AppointmentsPage({
                 {todayAppointments.map((apt) => (
                   <div
                     key={apt.id}
-                    className="p-3 rounded-xl bg-[var(--color-gray-50)] hover:bg-[var(--color-gray-100)] transition-colors"
+                    className="p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
                   >
                     <div className="flex items-start gap-3">
                       <div
@@ -163,16 +166,16 @@ export default async function AppointmentsPage({
                         <div className="flex items-center gap-2 mb-1">
                           <Clock
                             size={14}
-                            className="text-[var(--color-gray-400)]"
+                            className="text-gray-400"
                           />
-                          <span className="text-sm font-medium text-[var(--color-gray-800)]">
+                          <span className="text-sm font-medium text-gray-800">
                             {apt.appointment_time?.slice(0, 5)}
                           </span>
                         </div>
-                        <p className="font-medium text-[var(--color-gray-800)] truncate">
+                        <p className="font-medium text-gray-800 truncate">
                           {apt.patient?.full_name || "Sin nombre"}
                         </p>
-                        <p className="text-xs text-[var(--color-gray-500)]">
+                        <p className="text-xs text-gray-500">
                           {serviceLabels[apt.service_type] || apt.service_type}
                         </p>
                       </div>
@@ -184,9 +187,9 @@ export default async function AppointmentsPage({
               <div className="text-center py-6">
                 <CalendarIcon
                   size={40}
-                  className="mx-auto text-[var(--color-gray-300)] mb-2"
+                  className="mx-auto text-gray-300 mb-2"
                 />
-                <p className="text-sm text-[var(--color-gray-500)]">
+                <p className="text-sm text-gray-500">
                   No hay citas para hoy
                 </p>
               </div>
@@ -195,7 +198,7 @@ export default async function AppointmentsPage({
 
           {/* Status legend */}
           <div className="bg-white rounded-2xl shadow-sm p-6">
-            <h3 className="text-sm font-semibold text-[var(--color-gray-800)] mb-4">
+            <h3 className="text-sm font-semibold text-gray-800 mb-4">
               Estados
             </h3>
             <div className="space-y-2">
@@ -210,7 +213,7 @@ export default async function AppointmentsPage({
                   <div
                     className={`w-3 h-3 rounded-full ${statusColors[item.status]}`}
                   />
-                  <span className="text-sm text-[var(--color-gray-600)]">
+                  <span className="text-sm text-gray-600">
                     {item.label}
                   </span>
                 </div>

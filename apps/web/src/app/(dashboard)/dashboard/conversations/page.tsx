@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { MessageSquare, User, Clock, ChevronRight } from "lucide-react";
+import { MessageSquare, Clock, ChevronRight } from "lucide-react";
 
 export default async function ConversationsPage() {
   const supabase = await createClient();
@@ -28,9 +28,9 @@ export default async function ConversationsPage() {
   }>;
 
   const qualificationColors = {
-    qualified: "bg-green-100 text-green-700",
-    pending: "bg-amber-100 text-amber-700",
-    not_qualified: "bg-red-100 text-red-700",
+    qualified: "bg-success-100 text-success-700",
+    pending: "bg-warning-100 text-warning-700",
+    not_qualified: "bg-error-100 text-error-700",
   };
 
   const qualificationLabels = {
@@ -43,10 +43,10 @@ export default async function ConversationsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
+        <h1 className="text-2xl font-serif font-bold text-primary-600">
           Conversaciones
         </h1>
-        <p className="text-[var(--color-gray-600)]">
+        <p className="text-gray-600">
           Historial de conversaciones de WhatsApp con pacientes.
         </p>
       </div>
@@ -54,14 +54,14 @@ export default async function ConversationsPage() {
       {/* Chat list */}
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {chatSessions && chatSessions.length > 0 ? (
-          <div className="divide-y divide-[var(--color-gray-100)]">
+          <div className="divide-y divide-gray-100">
             {chatSessions.map((session) => (
               <Link
                 key={session.id}
                 href={`/dashboard/patients/${session.patient?.id}`}
-                className="flex items-center gap-4 p-4 hover:bg-[var(--color-gray-50)] transition-colors"
+                className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors"
               >
-                <div className="w-12 h-12 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center font-semibold text-[var(--color-primary)]">
+                <div className="w-12 h-12 rounded-full bg-primary-500/10 flex items-center justify-center font-semibold text-primary-600">
                   {session.patient?.full_name
                     ? session.patient.full_name.slice(0, 2).toUpperCase()
                     : session.patient?.whatsapp_number?.slice(-2) || "??"}
@@ -69,7 +69,7 @@ export default async function ConversationsPage() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <p className="font-medium text-[var(--color-gray-800)] truncate">
+                    <p className="font-medium text-gray-800 truncate">
                       {session.patient?.full_name || "Sin nombre"}
                     </p>
                     <span
@@ -84,10 +84,10 @@ export default async function ConversationsPage() {
                       ] || "Desconocido"}
                     </span>
                   </div>
-                  <p className="text-sm text-[var(--color-gray-500)] truncate">
+                  <p className="text-sm text-gray-500 truncate">
                     {session.patient?.whatsapp_number}
                   </p>
-                  <div className="flex items-center gap-4 mt-1 text-xs text-[var(--color-gray-400)]">
+                  <div className="flex items-center gap-4 mt-1 text-xs text-gray-400">
                     <span className="flex items-center gap-1">
                       <MessageSquare size={12} />
                       {session.total_messages || 0} mensajes
@@ -111,7 +111,7 @@ export default async function ConversationsPage() {
 
                 <ChevronRight
                   size={20}
-                  className="text-[var(--color-gray-400)]"
+                  className="text-gray-400"
                 />
               </Link>
             ))}
@@ -120,12 +120,12 @@ export default async function ConversationsPage() {
           <div className="p-12 text-center">
             <MessageSquare
               size={48}
-              className="mx-auto text-[var(--color-gray-300)] mb-3"
+              className="mx-auto text-gray-300 mb-3"
             />
-            <p className="text-[var(--color-gray-500)]">
+            <p className="text-gray-500">
               No hay conversaciones registradas
             </p>
-            <p className="text-sm text-[var(--color-gray-400)] mt-1">
+            <p className="text-sm text-gray-400 mt-1">
               Las conversaciones aparecerán cuando los pacientes contacten por
               WhatsApp
             </p>
@@ -135,4 +135,3 @@ export default async function ConversationsPage() {
     </div>
   );
 }
-

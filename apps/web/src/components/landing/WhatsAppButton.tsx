@@ -27,7 +27,7 @@ export default function WhatsAppButton() {
 
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844";
   const message = encodeURIComponent(
-    "Hola Dr. Jhoiner, solicito acceso al protocolo de mejora dental."
+    "Hola Dr. Jhoiner, me gustaría agendar una cita."
   );
 
   return (
@@ -39,16 +39,16 @@ export default function WhatsAppButton() {
       {/* Tooltip */}
       {showTooltip && (
         <div className="absolute bottom-full right-0 mb-4 animate-fade-in w-64">
-          <div className="relative glass-panel p-4 rounded-xl border border-emerald-500/30 bg-black/80">
+          <div className="relative bg-white rounded-xl shadow-xl p-4 border border-gray-200">
             <button
               onClick={() => setShowTooltip(false)}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-900 text-emerald-400 rounded-full flex items-center justify-center border border-emerald-500/50 hover:bg-emerald-800 transition-colors"
+              className="absolute -top-2 -right-2 w-6 h-6 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors border border-gray-200"
             >
               <X size={12} />
             </button>
-            <p className="text-xs text-emerald-100 typing-effect">
-              <span className="text-emerald-400 font-bold block mb-1">SISTEMA:</span>
-              Operadores disponibles para consulta inmediata. ¿Desea iniciar conexión?
+            <p className="text-sm text-gray-700">
+              <span className="text-primary-600 font-semibold block mb-1">¿Tienes preguntas?</span>
+              Estamos disponibles para ayudarte. Contáctanos por WhatsApp.
             </p>
           </div>
         </div>
@@ -59,10 +59,10 @@ export default function WhatsAppButton() {
         href={`https://wa.me/${whatsappNumber}?text=${message}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-16 h-16 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.5)] hover:shadow-[0_0_30px_rgba(16,185,129,0.8)] transition-all duration-300"
+        className="group relative flex items-center justify-center w-16 h-16 rounded-full bg-success-500 hover:bg-success-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+        aria-label="Contactar por WhatsApp"
       >
-        <span className="absolute inset-0 rounded-full border border-emerald-400 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] opacity-50" />
-        <MessageCircle size={32} className="relative z-10" />
+        <MessageCircle size={28} className="relative z-10" />
       </a>
     </div>
   );

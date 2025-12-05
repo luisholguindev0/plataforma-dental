@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 interface Patient {
   id: string;
@@ -120,15 +121,15 @@ export default function NewTransactionPage() {
       <div className="mb-8">
         <Link
           href="/dashboard/finances"
-          className="inline-flex items-center gap-2 text-[var(--color-gray-600)] hover:text-[var(--color-primary)] mb-4"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-primary-600 mb-4"
         >
           <ArrowLeft size={20} />
           Volver a finanzas
         </Link>
-        <h1 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
+        <h1 className="text-2xl font-serif font-bold text-primary-600">
           Nueva Transacción
         </h1>
-        <p className="text-[var(--color-gray-600)]">
+        <p className="text-gray-600">
           Registra un nuevo ingreso o gasto.
         </p>
       </div>
@@ -136,23 +137,23 @@ export default function NewTransactionPage() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-            <p className="text-red-600 text-sm">{error}</p>
+          <div className="bg-error-50 border border-error-200 rounded-xl p-4">
+            <p className="text-error-600 text-sm">{error}</p>
           </div>
         )}
 
         <div className="bg-white rounded-2xl shadow-sm p-6 space-y-6">
           {/* Transaction type */}
           <div>
-            <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Tipo de Transacción *
             </label>
             <div className="grid grid-cols-2 gap-4">
               <label
                 className={`flex items-center justify-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                   formData.type === "income"
-                    ? "border-green-500 bg-green-50 text-green-700"
-                    : "border-[var(--color-gray-200)] hover:border-[var(--color-gray-300)]"
+                    ? "border-success-500 bg-success-50 text-success-700"
+                    : "border-gray-200 hover:border-gray-300"
                 }`}
               >
                 <input
@@ -168,8 +169,8 @@ export default function NewTransactionPage() {
               <label
                 className={`flex items-center justify-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                   formData.type === "expense"
-                    ? "border-red-500 bg-red-50 text-red-700"
-                    : "border-[var(--color-gray-200)] hover:border-[var(--color-gray-300)]"
+                    ? "border-error-500 bg-error-50 text-error-700"
+                    : "border-gray-200 hover:border-gray-300"
                 }`}
               >
                 <input
@@ -187,148 +188,147 @@ export default function NewTransactionPage() {
 
           {/* Amount */}
           <div>
-            <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-              Monto *
-            </label>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-gray-500)]">
-                $
-              </span>
-              <input
-                type="number"
-                name="amount"
-                value={formData.amount}
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Monto *
+              </label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                  $
+                </span>
+                <input
+                  type="number"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleChange}
+                  placeholder="0"
+                  min="0"
+                  step="1000"
+                  required
+                  className="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-lg font-semibold bg-white"
+                />
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* Category */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Categoría
+                </label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Fecha
+                </label>
+                <input
+                  type="date"
+                  name="transaction_date"
+                  value={formData.transaction_date}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+                />
+              </div>
+            </div>
+
+            {/* Patient (optional for income) */}
+            {formData.type === "income" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Paciente (opcional)
+                </label>
+                <select
+                  name="patient_id"
+                  value={formData.patient_id}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+                >
+                  <option value="">Sin paciente asignado</option>
+                  {patients.map((patient) => (
+                    <option key={patient.id} value={patient.id}>
+                      {patient.full_name || patient.whatsapp_number}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* Payment method */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Método de Pago
+                </label>
+                <select
+                  name="payment_method"
+                  value={formData.payment_method}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+                >
+                  {paymentMethods.map((method) => (
+                    <option key={method} value={method}>
+                      {method}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Reference number */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Número de Referencia
+                </label>
+                <input
+                  type="text"
+                  name="reference_number"
+                  value={formData.reference_number}
+                  onChange={handleChange}
+                  placeholder="Opcional"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
+                />
+              </div>
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Descripción
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
                 onChange={handleChange}
-                placeholder="0"
-                min="0"
-                step="1000"
-                required
-                className="w-full pl-8 pr-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all text-lg font-semibold"
+                rows={3}
+                placeholder="Descripción de la transacción..."
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none bg-white"
               />
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {/* Category */}
-            <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-                Categoría
-              </label>
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
-              >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Date */}
-            <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-                Fecha
-              </label>
-              <input
-                type="date"
-                name="transaction_date"
-                value={formData.transaction_date}
-                onChange={handleChange}
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
-              />
-            </div>
-          </div>
-
-          {/* Patient (optional for income) */}
-          {formData.type === "income" && (
-            <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-                Paciente (opcional)
-              </label>
-              <select
-                name="patient_id"
-                value={formData.patient_id}
-                onChange={handleChange}
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
-              >
-                <option value="">Sin paciente asignado</option>
-                {patients.map((patient) => (
-                  <option key={patient.id} value={patient.id}>
-                    {patient.full_name || patient.whatsapp_number}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <div className="grid sm:grid-cols-2 gap-6">
-            {/* Payment method */}
-            <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-                Método de Pago
-              </label>
-              <select
-                name="payment_method"
-                value={formData.payment_method}
-                onChange={handleChange}
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
-              >
-                {paymentMethods.map((method) => (
-                  <option key={method} value={method}>
-                    {method}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Reference number */}
-            <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-                Número de Referencia
-              </label>
-              <input
-                type="text"
-                name="reference_number"
-                value={formData.reference_number}
-                onChange={handleChange}
-                placeholder="Opcional"
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
-              />
-            </div>
-          </div>
-
-          {/* Description */}
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
-              Descripción
-            </label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows={3}
-              placeholder="Descripción de la transacción..."
-              className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all resize-none"
-            />
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div className="flex justify-end gap-4">
-          <Link
-            href="/dashboard/finances"
-            className="px-6 py-2.5 text-[var(--color-gray-600)] hover:text-[var(--color-gray-800)] font-medium transition-colors"
-          >
-            Cancelar
-          </Link>
-          <button
+          {/* Actions */}
+          <div className="flex justify-end gap-4">
+            <Link
+              href="/dashboard/finances"
+              className="px-6 py-2.5 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+            >
+              Cancelar
+            </Link>
+          <Button
             type="submit"
             disabled={isLoading}
-            className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
@@ -341,7 +341,7 @@ export default function NewTransactionPage() {
                 Guardar Transacción
               </>
             )}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

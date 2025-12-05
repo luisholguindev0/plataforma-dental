@@ -181,9 +181,8 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${dmSans.variable} ${playfair.variable} antialiased relative min-h-screen text-white`}
+        className={`${dmSans.variable} ${playfair.variable} antialiased relative min-h-screen`}
       >
-        <FuturisticBackground />
         <div className="relative z-10">
           {children}
         </div>

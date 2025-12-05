@@ -10,6 +10,7 @@ import {
   Filter,
   Download,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface FinancesPageProps {
   searchParams: Promise<{
@@ -136,22 +137,24 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
+          <h1 className="text-2xl font-serif font-bold text-primary-600">
             Finanzas
           </h1>
-          <p className="text-[var(--color-gray-600)]">
+          <p className="text-gray-600">
             Gestiona los ingresos y gastos del consultorio.
           </p>
         </div>
         <div className="flex gap-3">
-          <button className="btn btn-outline inline-flex">
+          <Button variant="outline">
             <Download size={18} />
             Exportar
-          </button>
-          <Link href="/dashboard/finances/new" className="btn btn-primary inline-flex">
-            <Plus size={20} />
-            Nueva Transacción
-          </Link>
+          </Button>
+          <Button asChild>
+            <Link href="/dashboard/finances/new">
+              <Plus size={20} />
+              Nueva Transacción
+            </Link>
+          </Button>
         </div>
       </div>
 
@@ -160,44 +163,44 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-[var(--color-gray-500)]">Ingresos</p>
-              <p className="text-3xl font-bold text-green-600 mt-1">
+              <p className="text-sm text-gray-500">Ingresos</p>
+              <p className="text-3xl font-bold text-success-600 mt-1">
                 ${totalIncome.toLocaleString("es-CO")}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-green-100">
-              <TrendingUp size={24} className="text-green-600" />
+            <div className="p-3 rounded-xl bg-success-100">
+              <TrendingUp size={24} className="text-success-600" />
             </div>
           </div>
           <div className="mt-4 flex items-center gap-1 text-sm">
             {Number(incomeChange) >= 0 ? (
               <>
-                <ArrowUpRight size={16} className="text-green-500" />
-                <span className="text-green-500 font-medium">+{incomeChange}%</span>
+                <ArrowUpRight size={16} className="text-success-500" />
+                <span className="text-success-500 font-medium">+{incomeChange}%</span>
               </>
             ) : (
               <>
-                <ArrowDownRight size={16} className="text-red-500" />
-                <span className="text-red-500 font-medium">{incomeChange}%</span>
+                <ArrowDownRight size={16} className="text-error-500" />
+                <span className="text-error-500 font-medium">{incomeChange}%</span>
               </>
             )}
-            <span className="text-[var(--color-gray-400)]">vs periodo anterior</span>
+            <span className="text-gray-400">vs periodo anterior</span>
           </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-[var(--color-gray-500)]">Gastos</p>
-              <p className="text-3xl font-bold text-red-600 mt-1">
+              <p className="text-sm text-gray-500">Gastos</p>
+              <p className="text-3xl font-bold text-error-600 mt-1">
                 ${totalExpense.toLocaleString("es-CO")}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-red-100">
-              <TrendingDown size={24} className="text-red-600" />
+            <div className="p-3 rounded-xl bg-error-100">
+              <TrendingDown size={24} className="text-error-600" />
             </div>
           </div>
-          <div className="mt-4 text-sm text-[var(--color-gray-400)]">
+          <div className="mt-4 text-sm text-gray-400">
             {transactions?.filter((t) => t.type === "expense").length || 0} transacciones
           </div>
         </div>
@@ -205,20 +208,20 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
         <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm text-[var(--color-gray-500)]">Balance Neto</p>
+              <p className="text-sm text-gray-500">Balance Neto</p>
               <p
                 className={`text-3xl font-bold mt-1 ${
-                  netBalance >= 0 ? "text-[var(--color-primary)]" : "text-red-600"
+                  netBalance >= 0 ? "text-primary-600" : "text-error-600"
                 }`}
               >
                 ${netBalance.toLocaleString("es-CO")}
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-[var(--color-primary)]/10">
-              <DollarSign size={24} className="text-[var(--color-primary)]" />
+            <div className="p-3 rounded-xl bg-primary-500/10">
+              <DollarSign size={24} className="text-primary-600" />
             </div>
           </div>
-          <div className="mt-4 text-sm text-[var(--color-gray-400)]">
+          <div className="mt-4 text-sm text-gray-400">
             Período: {period === "week" ? "Última semana" : period === "month" ? "Último mes" : "Último año"}
           </div>
         </div>
@@ -228,7 +231,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
       <div className="flex flex-col sm:flex-row gap-4">
         <select
           defaultValue={params.period || "month"}
-          className="px-4 py-2.5 bg-white border border-[var(--color-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           <option value="week">Última semana</option>
           <option value="month">Último mes</option>
@@ -237,7 +240,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
 
         <select
           defaultValue={params.type || "all"}
-          className="px-4 py-2.5 bg-white border border-[var(--color-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           <option value="all">Todos los tipos</option>
           <option value="income">Ingresos</option>
@@ -246,7 +249,7 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
 
         <select
           defaultValue={params.patient || ""}
-          className="px-4 py-2.5 bg-white border border-[var(--color-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+          className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           <option value="">Todos los pacientes</option>
           {patients?.map((patient) => (
@@ -262,32 +265,32 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-[var(--color-gray-50)] border-b border-[var(--color-gray-200)]">
-                <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--color-gray-600)]">
+              <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
                   Fecha
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--color-gray-600)]">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
                   Descripción
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--color-gray-600)]">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
                   Paciente
                 </th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-[var(--color-gray-600)]">
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">
                   Categoría
                 </th>
-                <th className="text-right px-6 py-4 text-sm font-semibold text-[var(--color-gray-600)]">
+                <th className="text-right px-6 py-4 text-sm font-semibold text-gray-600">
                   Monto
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--color-gray-100)]">
+            <tbody className="divide-y divide-gray-100">
               {transactions && transactions.length > 0 ? (
                 transactions.map((trx) => (
                   <tr
                     key={trx.id}
-                    className="hover:bg-[var(--color-gray-50)] transition-colors"
+                    className="hover:bg-gray-50 transition-colors"
                   >
-                    <td className="px-6 py-4 text-sm text-[var(--color-gray-600)]">
+                    <td className="px-6 py-4 text-sm text-gray-600">
                       {new Date(trx.transaction_date).toLocaleDateString("es-CO", {
                         day: "numeric",
                         month: "short",
@@ -295,36 +298,36 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
                       })}
                     </td>
                     <td className="px-6 py-4">
-                      <p className="font-medium text-[var(--color-gray-800)]">
+                      <p className="font-medium text-gray-800">
                         {trx.description || "Sin descripción"}
                       </p>
                       {trx.payment_method && (
-                        <p className="text-xs text-[var(--color-gray-500)]">
+                        <p className="text-xs text-gray-500">
                           {trx.payment_method}
                         </p>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-[var(--color-gray-600)]">
+                    <td className="px-6 py-4 text-sm text-gray-600">
                       {trx.patient ? (
                         <Link
                           href={`/dashboard/patients/${trx.patient.id}`}
-                          className="hover:text-[var(--color-primary)]"
+                          className="hover:text-primary-600"
                         >
                           {trx.patient.full_name || trx.patient.whatsapp_number}
                         </Link>
                       ) : (
-                        <span className="text-[var(--color-gray-400)]">-</span>
+                        <span className="text-gray-400">-</span>
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <span className="px-2 py-1 bg-[var(--color-gray-100)] rounded-lg text-xs text-[var(--color-gray-600)]">
+                      <span className="px-2 py-1 bg-gray-100 rounded-lg text-xs text-gray-600">
                         {trx.category || "Sin categoría"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <span
                         className={`font-semibold ${
-                          trx.type === "income" ? "text-green-600" : "text-red-600"
+                          trx.type === "income" ? "text-success-600" : "text-error-600"
                         }`}
                       >
                         {trx.type === "income" ? "+" : "-"}$
@@ -338,14 +341,14 @@ export default async function FinancesPage({ searchParams }: FinancesPageProps) 
                   <td colSpan={5} className="px-6 py-12 text-center">
                     <DollarSign
                       size={48}
-                      className="mx-auto text-[var(--color-gray-300)] mb-3"
+                      className="mx-auto text-gray-300 mb-3"
                     />
-                    <p className="text-[var(--color-gray-500)]">
+                    <p className="text-gray-500">
                       No hay transacciones registradas
                     </p>
                     <Link
                       href="/dashboard/finances/new"
-                      className="text-[var(--color-accent)] hover:text-[var(--color-accent-dark)] font-medium text-sm mt-2 inline-block"
+                      className="text-primary-600 hover:text-primary-700 font-medium text-sm mt-2 inline-block"
                     >
                       Registrar primera transacción →
                     </Link>

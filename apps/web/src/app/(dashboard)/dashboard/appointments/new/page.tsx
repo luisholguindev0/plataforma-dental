@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ArrowLeft, Save, Loader2, Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import type { AppointmentInsert } from "database/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const serviceOptions = [
   { value: "valoracion", label: "Valoración" },
@@ -169,15 +171,15 @@ export default function NewAppointmentPage() {
       <div className="mb-8">
         <Link
           href="/dashboard/appointments"
-          className="inline-flex items-center gap-2 text-[var(--color-gray-600)] hover:text-[var(--color-primary)] mb-4"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-primary-600 mb-4"
         >
           <ArrowLeft size={20} />
           Volver a citas
         </Link>
-        <h1 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
+        <h1 className="text-2xl font-serif font-bold text-primary-600">
           Nueva Cita
         </h1>
-        <p className="text-[var(--color-gray-600)]">
+        <p className="text-gray-600">
           Programa una nueva cita para un paciente.
         </p>
       </div>
@@ -185,25 +187,25 @@ export default function NewAppointmentPage() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-            <p className="text-red-600 text-sm">{error}</p>
+          <div className="bg-error-50 border border-error-200 rounded-xl p-4">
+            <p className="text-error-600 text-sm">{error}</p>
           </div>
         )}
 
         <div className="bg-white rounded-2xl shadow-sm p-6 space-y-6">
           {/* Patient selector */}
           <div>
-            <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Paciente *
             </label>
             <div className="relative">
               {selectedPatient ? (
-                <div className="flex items-center justify-between p-3 border border-[var(--color-gray-200)] rounded-xl bg-[var(--color-gray-50)]">
+                <div className="flex items-center justify-between p-3 border border-gray-200 rounded-xl bg-gray-50">
                   <div>
-                    <p className="font-medium text-[var(--color-gray-800)]">
+                    <p className="font-medium text-gray-800">
                       {selectedPatient.full_name || "Sin nombre"}
                     </p>
-                    <p className="text-sm text-[var(--color-gray-500)]">
+                    <p className="text-sm text-gray-500">
                       {selectedPatient.whatsapp_number}
                     </p>
                   </div>
@@ -213,7 +215,7 @@ export default function NewAppointmentPage() {
                       setSelectedPatient(null);
                       setFormData((prev) => ({ ...prev, patient_id: "" }));
                     }}
-                    className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-dark)]"
+                    className="text-sm text-primary-600 hover:text-primary-700"
                   >
                     Cambiar
                   </button>
@@ -222,9 +224,9 @@ export default function NewAppointmentPage() {
                 <div className="relative">
                   <Search
                     size={18}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-gray-400)]"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none"
                   />
-                  <input
+                  <Input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => {
@@ -233,7 +235,7 @@ export default function NewAppointmentPage() {
                     }}
                     onFocus={() => setShowPatientDropdown(true)}
                     placeholder="Buscar paciente por nombre o teléfono..."
-                    className="w-full pl-10 pr-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
+                    className="pl-10"
                   />
                   {showPatientDropdown && (
                     <>
@@ -241,25 +243,25 @@ export default function NewAppointmentPage() {
                         className="fixed inset-0 z-10"
                         onClick={() => setShowPatientDropdown(false)}
                       />
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[var(--color-gray-200)] rounded-xl shadow-lg max-h-60 overflow-y-auto z-20">
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto z-20">
                         {filteredPatients.length > 0 ? (
                           filteredPatients.map((patient) => (
                             <button
                               key={patient.id}
                               type="button"
                               onClick={() => handlePatientSelect(patient)}
-                              className="w-full text-left px-4 py-3 hover:bg-[var(--color-gray-50)] transition-colors"
+                              className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors"
                             >
-                              <p className="font-medium text-[var(--color-gray-800)]">
+                              <p className="font-medium text-gray-800">
                                 {patient.full_name || "Sin nombre"}
                               </p>
-                              <p className="text-sm text-[var(--color-gray-500)]">
+                              <p className="text-sm text-gray-500">
                                 {patient.whatsapp_number}
                               </p>
                             </button>
                           ))
                         ) : (
-                          <div className="px-4 py-3 text-center text-[var(--color-gray-500)]">
+                          <div className="px-4 py-3 text-center text-gray-500">
                             No se encontraron pacientes
                           </div>
                         )}
@@ -274,22 +276,21 @@ export default function NewAppointmentPage() {
           {/* Date and time */}
           <div className="grid sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Fecha *
               </label>
-              <input
+              <Input
                 type="date"
                 name="appointment_date"
                 value={formData.appointment_date}
                 onChange={handleChange}
                 min={today}
                 required
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Hora *
               </label>
               <select
@@ -297,7 +298,7 @@ export default function NewAppointmentPage() {
                 value={formData.appointment_time}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
               >
                 <option value="">Seleccionar hora</option>
                 {timeSlots.map((time) => (
@@ -311,14 +312,14 @@ export default function NewAppointmentPage() {
 
           {/* Service type */}
           <div>
-            <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Tipo de Servicio
             </label>
             <select
               name="service_type"
               value={formData.service_type}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white"
             >
               {serviceOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -330,7 +331,7 @@ export default function NewAppointmentPage() {
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-[var(--color-gray-700)] mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Notas
             </label>
             <textarea
@@ -339,7 +340,7 @@ export default function NewAppointmentPage() {
               onChange={handleChange}
               rows={3}
               placeholder="Notas adicionales sobre la cita..."
-              className="w-full px-4 py-2.5 border border-[var(--color-gray-200)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all resize-none"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none bg-white"
             />
           </div>
         </div>
@@ -348,14 +349,13 @@ export default function NewAppointmentPage() {
         <div className="flex justify-end gap-4">
           <Link
             href="/dashboard/appointments"
-            className="px-6 py-2.5 text-[var(--color-gray-600)] hover:text-[var(--color-gray-800)] font-medium transition-colors"
+            className="px-6 py-2.5 text-gray-600 hover:text-gray-800 font-medium transition-colors"
           >
             Cancelar
           </Link>
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
@@ -368,10 +368,9 @@ export default function NewAppointmentPage() {
                 Guardar Cita
               </>
             )}
-          </button>
+          </Button>
         </div>
       </form>
     </div>
   );
 }
-

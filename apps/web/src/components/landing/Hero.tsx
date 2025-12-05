@@ -1,139 +1,118 @@
 "use client";
 
-import { ArrowRight, Sparkles, Shield, Zap, Activity, Hexagon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowRight, Sparkles, Shield, Zap, Activity } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const features = [
-  { icon: Zap, text: "Tecnología Láser" },
-  { icon: Shield, text: "Bioseguridad Nivel 5" },
-  { icon: Activity, text: "Escaneo 3D en Tiempo Real" },
+  { icon: Zap, text: "Tecnología Avanzada" },
+  { icon: Shield, text: "Bioseguridad Total" },
+  { icon: Activity, text: "Escaneo Digital 3D" },
 ];
 
 export default function Hero() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth) * 20,
-        y: (e.clientY / window.innerHeight) * 20,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Dynamic Light Source */}
-      <div 
-        className="absolute pointer-events-none opacity-30 blur-[100px] transition-transform duration-100 ease-out will-change-transform"
-        style={{
-          top: '50%',
-          left: '50%',
-          width: '600px',
-          height: '600px',
-          background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)',
-          transform: `translate(${mousePos.x * -2 - 50}%, ${mousePos.y * -2 - 50}%)`
-        }}
-      />
-
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Content */}
           <div className="text-center lg:text-left space-y-8">
-            <div className="inline-flex items-center gap-2 glass-panel px-6 py-3 rounded-full text-sm font-medium text-cyan-300 border border-cyan-900/50 animate-fade-in">
-              <Sparkles size={16} className="animate-pulse" />
-              <span className="tracking-widest uppercase">Futuro Dental Integrado</span>
+            <div className="inline-flex items-center gap-2 bg-primary-50 border border-primary-200 px-6 py-3 rounded-full text-sm font-medium text-primary-700 animate-fade-in">
+              <Sparkles size={16} className="text-primary-600" />
+              <span className="tracking-wide">Odontología de Vanguardia</span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in delay-100">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold leading-tight animate-fade-in delay-100">
               Tu Sonrisa <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-pulse-glow">
+              <span className="bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                 Redefinida
               </span>
             </h1>
 
-            <p className="text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed animate-fade-in delay-200">
-              Dr. Jhoiner Marquez. Arquitectura dental de precisión. 
-              Donde la biología se encuentra con la tecnología avanzada para resultados perfectos.
+            <p className="text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 leading-relaxed animate-fade-in delay-200">
+              Dr. Jhoiner Marquez. Especialista en Estética Dental y Diseño de Sonrisa. 
+              Transformamos sonrisas con tecnología de precisión y un enfoque personalizado.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start animate-fade-in delay-300">
-              <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Hola Dr. Jhoiner, quiero acceder al futuro.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-cyber group"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in delay-300">
+              <Button
+                asChild
+                size="lg"
+                className="group"
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  Iniciar Protocolo
+                <a
+                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Hola Dr. Jhoiner, me gustaría agendar una cita.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Agendar Cita
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-              </a>
-              <a
-                href="#servicios"
-                className="px-8 py-3 rounded-lg border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-900/10 transition-all duration-300 text-gray-300 hover:text-cyan-300"
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
               >
-                Explorar Sistemas
-              </a>
+                <a href="#servicios">
+                  Ver Servicios
+                </a>
+              </Button>
             </div>
 
-            {/* Tech Specs */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-8 animate-fade-in delay-400 border-t border-white/5">
+            {/* Features */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-6 pt-8 animate-fade-in delay-400 border-t border-gray-200">
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 text-gray-400 hover:text-cyan-400 transition-colors duration-300 cursor-default"
+                  className="flex items-center gap-3 text-gray-600"
                 >
-                  <feature.icon size={20} />
-                  <span className="text-sm uppercase tracking-wider font-semibold">{feature.text}</span>
+                  <div className="p-2 bg-primary-100 rounded-lg">
+                    <feature.icon size={18} className="text-primary-600" />
+                  </div>
+                  <span className="text-sm font-medium">{feature.text}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Visual Interface */}
-          <div className="relative hidden lg:block perspective-1000">
-            <div 
-              className="relative w-full aspect-square max-w-lg mx-auto transition-transform duration-200 ease-out"
-              style={{
-                transform: `rotateX(${mousePos.y}deg) rotateY(${mousePos.x}deg)`
-              }}
-            >
-              {/* Holographic Ring */}
-              <div className="absolute inset-0 border-2 border-cyan-500/20 rounded-full animate-[spin_10s_linear_infinite]" />
-              <div className="absolute inset-4 border border-purple-500/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
-              
-              {/* Central Hub */}
-              <div className="absolute inset-0 m-auto w-64 h-64 glass-card rounded-full flex items-center justify-center overflow-hidden relative">
-                 <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/20 to-purple-900/20" />
-                 <div className="text-center z-10">
-                    <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20">JM</div>
-                    <div className="text-xs uppercase tracking-[0.5em] text-cyan-400 mt-2">System v2.0</div>
-                 </div>
-                 
-                 {/* Scanning Line */}
-                 <div className="absolute top-0 left-0 w-full h-1 bg-cyan-400/50 shadow-[0_0_15px_rgba(34,211,238,0.8)] animate-[scan_3s_ease-in-out_infinite]" />
+          {/* Visual - Clean and Professional */}
+          <div className="relative hidden lg:block">
+            <div className="relative w-full aspect-square max-w-lg mx-auto">
+              {/* Main Image Container */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-50 to-primary-100 border border-primary-200 shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Placeholder for doctor image - should be replaced with actual image */}
+                  <div className="w-64 h-64 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-xl">
+                    <span className="text-white font-serif font-bold text-6xl">JM</span>
+                  </div>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute top-8 right-8 w-24 h-24 bg-primary-200/30 rounded-full blur-2xl" />
+                <div className="absolute bottom-8 left-8 w-32 h-32 bg-primary-300/20 rounded-full blur-3xl" />
               </div>
 
-              {/* Floating Data Modules */}
-              <div className="absolute -right-12 top-1/4 glass-panel p-4 rounded-xl animate-float delay-100">
+              {/* Floating Stats Cards */}
+              <div className="absolute -right-8 top-1/4 bg-white rounded-2xl shadow-xl p-6 border border-gray-200 animate-float delay-100">
                 <div className="flex items-center gap-4">
-                  <Hexagon className="text-purple-400 animate-pulse" size={32} />
+                  <div className="p-3 bg-success-100 rounded-xl">
+                    <Activity className="text-success-600" size={24} />
+                  </div>
                   <div>
-                    <div className="text-xs text-gray-400 uppercase">Estado</div>
-                    <div className="text-lg font-bold text-white">Optimizado</div>
+                    <div className="text-xs text-gray-500 uppercase tracking-wider">Experiencia</div>
+                    <div className="text-2xl font-bold text-gray-900">10+ Años</div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute -left-8 bottom-1/3 glass-panel p-4 rounded-xl animate-float delay-300">
+              <div className="absolute -left-8 bottom-1/4 bg-white rounded-2xl shadow-xl p-6 border border-gray-200 animate-float delay-300">
                 <div className="flex items-center gap-4">
-                  <Activity className="text-cyan-400" size={32} />
+                  <div className="p-3 bg-primary-100 rounded-xl">
+                    <Shield className="text-primary-600" size={24} />
+                  </div>
                   <div>
-                    <div className="text-xs text-gray-400 uppercase">Precisión</div>
-                    <div className="text-lg font-bold text-white">99.9%</div>
+                    <div className="text-xs text-gray-500 uppercase tracking-wider">Pacientes</div>
+                    <div className="text-2xl font-bold text-gray-900">500+</div>
                   </div>
                 </div>
               </div>
@@ -143,9 +122,9 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-        <span className="text-[10px] uppercase tracking-widest text-cyan-500">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500 to-transparent" />
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+        <span className="text-[10px] uppercase tracking-widest text-gray-400">Scroll</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-primary-500 to-transparent" />
       </div>
     </section>
   );

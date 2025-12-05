@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, Loader2, Mail, Lock } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -45,10 +47,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 overflow-hidden">
-      {/* Elegant background with gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--luxury-gray-50)] via-[var(--gold-champagne)]/30 to-[var(--luxury-gray-100)]" />
-      
+    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-gradient-to-br from-gray-50 via-primary-50/30 to-gray-100">
       {/* Subtle pattern overlay */}
       <div 
         className="absolute inset-0 opacity-[0.03]"
@@ -58,32 +57,32 @@ export default function LoginPage() {
       />
 
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[var(--gold-primary)]/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[var(--gold-light)]/10 to-transparent rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary-500/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-400/10 to-transparent rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
       <div className="relative w-full max-w-md z-10">
         {/* Logo */}
         <div className="text-center mb-8 animate-fade-in">
           <Link href="/" className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 group">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[var(--gold-primary)] to-[var(--gold-light)] flex items-center justify-center shadow-lg shadow-[var(--gold-glow)] group-hover:shadow-xl group-hover:shadow-[var(--gold-glow)] transition-all duration-300">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-primary-500 to-primary-400 flex items-center justify-center shadow-lg shadow-primary-500/30 group-hover:shadow-xl group-hover:shadow-primary-500/40 transition-all duration-300">
               <span className="text-white font-serif font-bold text-2xl sm:text-3xl">JM</span>
             </div>
             <div className="text-center sm:text-left">
-              <p className="font-serif text-[var(--luxury-gray-900)] font-semibold text-xl sm:text-2xl leading-tight">
+              <p className="font-serif text-gray-900 font-semibold text-xl sm:text-2xl leading-tight">
                 Dr. Jhoiner Marquez
               </p>
-              <p className="text-sm text-[var(--luxury-gray-600)] mt-1">Panel de Administración</p>
+              <p className="text-sm text-gray-600 mt-1">Panel de Administración</p>
             </div>
           </Link>
         </div>
 
-        {/* Login card with glassmorphism */}
-        <div className="glass-panel-premium rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 animate-fade-in delay-100">
+        {/* Login card */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-gray-200 animate-fade-in delay-100">
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-[var(--gold-primary)] to-[var(--gold-light)] bg-clip-text text-transparent mb-3">
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent mb-3">
               Bienvenido
             </h1>
-            <p className="text-[var(--luxury-gray-600)] text-sm sm:text-base">
+            <p className="text-gray-600 text-sm sm:text-base">
               Ingresa tus credenciales para acceder al panel
             </p>
           </div>
@@ -91,8 +90,8 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* Error message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-xl p-4 animate-fade-in">
-                <p className="text-red-600 text-sm">{error}</p>
+              <div className="bg-error-50 border border-error-200 rounded-xl p-4 animate-fade-in">
+                <p className="text-error-600 text-sm">{error}</p>
               </div>
             )}
 
@@ -100,22 +99,22 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-[var(--luxury-gray-700)] mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Correo electrónico
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors">
-                  <Mail size={20} className={`transition-colors ${email ? "text-[var(--gold-primary)]" : "text-[var(--luxury-gray-400)]"}`} />
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors z-10">
+                  <Mail size={20} className={`transition-colors ${email ? "text-primary-600" : "text-gray-400"}`} />
                 </div>
-                <input
+                <Input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tu@email.com"
                   required
-                  className="w-full pl-12 pr-4 py-3 border-2 border-[var(--luxury-gray-200)] rounded-xl focus:ring-2 focus:ring-[var(--gold-primary)] focus:border-[var(--gold-primary)] transition-all outline-none bg-white hover:border-[var(--luxury-gray-300)]"
+                  className="pl-12"
                 />
               </div>
             </div>
@@ -124,43 +123,44 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-[var(--luxury-gray-700)] mb-2"
+                className="block text-sm font-medium text-gray-700 mb-2"
               >
                 Contraseña
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors">
-                  <Lock size={20} className={`transition-colors ${password ? "text-[var(--gold-primary)]" : "text-[var(--luxury-gray-400)]"}`} />
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors z-10">
+                  <Lock size={20} className={`transition-colors ${password ? "text-primary-600" : "text-gray-400"}`} />
                 </div>
-                <input
+                <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pl-12 pr-12 py-3 border-2 border-[var(--luxury-gray-200)] rounded-xl focus:ring-2 focus:ring-[var(--gold-primary)] focus:border-[var(--gold-primary)] transition-all outline-none bg-white hover:border-[var(--luxury-gray-300)]"
+                  className="pl-12 pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center hover:opacity-70 transition-opacity"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center hover:opacity-70 transition-opacity z-10"
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
                   {showPassword ? (
-                    <EyeOff size={20} className="text-[var(--luxury-gray-400)]" />
+                    <EyeOff size={20} className="text-gray-400" />
                   ) : (
-                    <Eye size={20} className="text-[var(--luxury-gray-400)]" />
+                    <Eye size={20} className="text-gray-400" />
                   )}
                 </button>
               </div>
             </div>
 
             {/* Submit button */}
-            <button
+            <Button
               type="submit"
               disabled={isLoading}
-              className="btn-premium w-full py-3.5 sm:py-4 text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center justify-center gap-2"
+              className="w-full py-3.5 sm:py-4 text-base sm:text-lg"
+              size="lg"
             >
               {isLoading ? (
                 <>
@@ -170,13 +170,13 @@ export default function LoginPage() {
               ) : (
                 "Iniciar Sesión"
               )}
-            </button>
+            </Button>
           </form>
 
           <div className="mt-6 text-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-[var(--luxury-gray-600)] hover:text-[var(--gold-primary)] transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 transition-colors group"
             >
               <span className="group-hover:-translate-x-1 transition-transform">←</span>
               <span>Volver al sitio web</span>
@@ -185,11 +185,10 @@ export default function LoginPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-center mt-6 text-[var(--luxury-gray-500)] text-xs sm:text-sm animate-fade-in delay-200">
+        <p className="text-center mt-6 text-gray-500 text-xs sm:text-sm animate-fade-in delay-200">
           © {new Date().getFullYear()} Dr. Jhoiner Marquez. Panel de Administración.
         </p>
       </div>
     </div>
   );
 }
-

@@ -1,85 +1,99 @@
 "use client";
 
-import { MapPin, Clock, Phone, Globe } from "lucide-react";
+import { MapPin, Clock, Phone } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function Location() {
   return (
-    <section id="ubicacion" className="section-lg relative">
+    <section id="ubicacion" className="py-24 bg-white">
       <div className="container mx-auto px-6">
-        <div className="glass-panel rounded-3xl overflow-hidden border border-white/10 flex flex-col lg:flex-row">
-          {/* Info Panel */}
-          <div className="lg:w-1/3 p-12 bg-black/40 backdrop-blur-xl">
-            <h2 className="text-3xl font-bold text-white mb-8">Base de Operaciones</h2>
-            
-            <div className="space-y-8">
-              <div className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-lg bg-cyan-900/20 flex items-center justify-center text-cyan-400 group-hover:text-white transition-colors">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Coordenadas</p>
-                  <p className="text-white">Calle 58 #62-61</p>
-                  <p className="text-gray-400">Barranquilla, Atlántico</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-lg bg-purple-900/20 flex items-center justify-center text-purple-400 group-hover:text-white transition-colors">
-                  <Clock size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Horario de Sistema</p>
-                  <p className="text-white">Lun - Vie: 08:00 - 18:00</p>
-                  <p className="text-gray-400">Sáb: 08:00 - 12:00</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-lg bg-emerald-900/20 flex items-center justify-center text-emerald-400 group-hover:text-white transition-colors">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Canal de Voz</p>
-                  <p className="text-white">+57 301 499 0844</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12">
-              <a
-                href="https://maps.google.com/?q=Calle+58+62-61+Barranquilla+Colombia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-cyber w-full text-center block"
-              >
-                Iniciar Navegación
-              </a>
-            </div>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-serif font-bold text-gray-900 mb-4">
+              Nuestra <span className="text-primary-600">Ubicación</span>
+            </h2>
+            <p className="text-lg text-gray-600">
+              Visítanos en nuestro consultorio en el corazón de Barranquilla
+            </p>
           </div>
 
-          {/* Map Visualization */}
-          <div className="lg:w-2/3 bg-gray-900 relative min-h-[400px]">
-            <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-               {/* Futuristic Map Placeholder */}
-               <div className="relative w-full h-full bg-gray-800 overflow-hidden">
-                  {/* Grid Lines */}
-                  <div className="absolute inset-0" 
-                       style={{
-                         backgroundImage: 'linear-gradient(rgba(0,240,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.1) 1px, transparent 1px)',
-                         backgroundSize: '40px 40px'
-                       }}
-                  />
-                  
-                  {/* Radar Effect */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-cyan-500/30 rounded-full animate-[ping_3s_linear_infinite]" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_20px_#22d3ee]" />
-                  
-                  <div className="absolute bottom-4 right-4 bg-black/80 p-2 rounded border border-cyan-500/30 text-xs font-mono text-cyan-400">
-                    LAT: 10.9685 | LON: -74.7813
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Info Panel */}
+            <Card className="border-0 shadow-xl">
+              <CardContent className="p-8 lg:p-12">
+                <h3 className="text-2xl font-serif font-bold text-gray-900 mb-8">
+                  Información de Contacto
+                </h3>
+                
+                <div className="space-y-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                      <MapPin size={20} className="text-primary-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Dirección</p>
+                      <p className="text-gray-900 font-medium">Calle 58 #62-61</p>
+                      <p className="text-gray-600">Barranquilla, Atlántico</p>
+                    </div>
                   </div>
-               </div>
-            </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                      <Clock size={20} className="text-primary-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Horario de Atención</p>
+                      <p className="text-gray-900 font-medium">Lunes - Viernes: 8:00 AM - 6:00 PM</p>
+                      <p className="text-gray-600">Sábados: 8:00 AM - 12:00 PM</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                      <Phone size={20} className="text-primary-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Teléfono</p>
+                      <p className="text-gray-900 font-medium">+57 301 499 0844</p>
+                      <p className="text-gray-600">WhatsApp disponible</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10">
+                  <Button
+                    asChild
+                    className="w-full"
+                    size="lg"
+                  >
+                    <a
+                      href="https://maps.google.com/?q=Calle+58+62-61+Barranquilla+Colombia"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Ver en Google Maps
+                    </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Map */}
+            <Card className="border-0 shadow-xl overflow-hidden">
+              <div className="w-full h-full min-h-[500px] bg-gray-100 relative">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.5!2d-74.7813!3d10.9685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDU4JzA2LjYiTiA3NMKwNDYnNTIuNyJX!5e0!3m2!1ses!2sco!4v1234567890"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, minHeight: '500px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="absolute inset-0"
+                />
+              </div>
+            </Card>
           </div>
         </div>
       </div>
