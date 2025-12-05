@@ -4,7 +4,6 @@
   "outputDirectory": "apps/web/.next",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["iad1"],
-  "ignoreCommand": "git rev-parse --verify HEAD^ >/dev/null 2>&1 && git diff HEAD^ HEAD --quiet -- apps/web packages/database || exit 1"
+  "regions": ["iad1"]
 }
 
