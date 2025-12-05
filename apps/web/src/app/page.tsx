@@ -12,8 +12,11 @@ import {
 export default function HomePage() {
   return (
     <>
+      <a href="#main-content" className="skip-to-content">
+        Saltar al contenido principal
+      </a>
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
         <Services />
         <About />

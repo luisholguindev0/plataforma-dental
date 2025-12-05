@@ -283,87 +283,23 @@ body:not(.dashboard) ::-webkit-scrollbar-thumb {
   }
 }
 
-/* Touch-friendly tap targets - Mejorado para accesibilidad */
+/* Touch-friendly tap targets */
 @media (hover: none) and (pointer: coarse) {
   button,
   a,
-  [role="button"],
-  input[type="button"],
-  input[type="submit"],
-  input[type="checkbox"],
-  input[type="radio"] {
+  [role="button"] {
     min-height: 44px;
     min-width: 44px;
-  }
-  
-  /* Espaciado adicional en móviles */
-  .mobile-spacing {
-    padding: 12px;
-  }
-}
-
-/* Mejoras de contraste para accesibilidad WCAG AA */
-@media (prefers-contrast: high) {
-  * {
-    border-color: currentColor;
-  }
-  
-  button,
-  a {
-    border-width: 2px;
-  }
-}
-
-/* Reducir animaciones para usuarios que prefieren menos movimiento */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
 
 /* ============================================
-   FOCUS STYLES - Accesibilidad mejorada
+   FOCUS STYLES
    ============================================ */
 
 *:focus-visible {
   outline: 2px solid var(--color-ring);
   outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* Focus mejorado para elementos interactivos */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-[role="button"]:focus-visible,
-[tabindex]:focus-visible {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-}
-
-/* Skip to content link para accesibilidad */
-.skip-to-content {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--color-primary-600);
-  color: white;
-  padding: 8px 16px;
-  z-index: 100;
-  text-decoration: none;
-  border-radius: 0 0 4px 0;
-}
-
-.skip-to-content:focus {
-  top: 0;
 }
 
 /* ============================================
