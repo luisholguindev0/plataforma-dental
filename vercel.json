@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:web",
+  "outputDirectory": "apps/web/.next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "rootDirectory": "apps/web",
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet ./apps/web/ ./packages/database/"
+}
+

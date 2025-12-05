@@ -1,0 +1,53 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy root package files for workspace setup
+COPY package.json package-lock.json ./
+
+# Copy workspace package files
+COPY apps/whatsapp-service/package.json ./apps/whatsapp-service/
+COPY packages/database/package.json ./packages/database/
+
+# Install all dependencies (including dev dependencies for build)
+RUN npm ci
+
+# Copy source code
+COPY apps/whatsapp-service/tsconfig.json ./apps/whatsapp-service/
+COPY apps/whatsapp-service/src ./apps/whatsapp-service/src
+COPY packages/database ./packages/database
+
+# Build the application
+WORKDIR /app/apps/whatsapp-service
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Copy root package files
+COPY package.json package-lock.json ./
+
+# Copy workspace package files
+COPY apps/whatsapp-service/package.json ./apps/whatsapp-service/
+COPY packages/database/package.json ./packages/database/
+COPY packages/database ./packages/database
+
+# Install production dependencies only
+RUN npm ci --only=production
+
+# Copy built application from builder
+COPY --from=builder /app/apps/whatsapp-service/dist ./apps/whatsapp-service/dist
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=3001
+
+# Expose port
+EXPOSE 3001
+
+# Start the application
+WORKDIR /app/apps/whatsapp-service
+CMD ["node", "dist/index.js"]
