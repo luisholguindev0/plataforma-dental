@@ -6,6 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { User, Bell, Building2, Shield, Save } from "lucide-react";
 
+interface Profile {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  phone: string | null;
+  [key: string]: unknown;
+}
+
 export default async function SettingsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -15,11 +23,13 @@ export default async function SettingsPage() {
   }
 
   // Get user profile data
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .single();
+
+  const profile = (profileData || null) as Profile | null;
 
   return (
     <div className="space-y-6">
@@ -93,7 +103,7 @@ export default async function SettingsPage() {
                     </label>
                     <Input
                       id="lastName"
-                      defaultValue={profile?.last_name || ""}
+                      defaultValue={(profile?.last_name as string) || ""}
                       placeholder="Tu apellido"
                     />
                   </div>
@@ -106,7 +116,7 @@ export default async function SettingsPage() {
                   <Input
                     id="phone"
                     type="tel"
-                    defaultValue={profile?.phone || ""}
+                    defaultValue={(profile?.phone as string) || ""}
                     placeholder="+57 300 000 0000"
                   />
                 </div>
