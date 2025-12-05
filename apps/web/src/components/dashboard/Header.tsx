@@ -36,49 +36,53 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
     .toUpperCase() || "U";
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-[var(--color-gray-200)]">
-      <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-[var(--luxury-gray-200)] shadow-sm">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0 h-auto sm:h-16 px-4 sm:px-6 lg:px-8 py-3 sm:py-0">
         {/* Search */}
-        <div className="flex-1 max-w-lg">
+        <div className="flex-1 w-full sm:max-w-lg">
           <div className="relative">
             <Search
-              size={20}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-gray-400)]"
+              size={18}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--luxury-gray-400)]"
             />
             <input
               type="text"
               placeholder="Buscar pacientes, citas..."
-              className="w-full pl-10 pr-4 py-2 bg-[var(--color-gray-50)] border border-[var(--color-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-all"
+              className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-2 bg-[var(--luxury-gray-50)] border border-[var(--luxury-gray-200)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--gold-primary)] focus:border-[var(--gold-primary)] transition-all hover:border-[var(--luxury-gray-300)]"
             />
           </div>
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-4 ml-4">
+        <div className="flex items-center gap-3 sm:gap-4 sm:ml-4">
           {/* Notifications */}
-          <button className="relative p-2 rounded-xl hover:bg-[var(--color-gray-100)] transition-colors">
-            <Bell size={20} className="text-[var(--color-gray-600)]" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-[var(--color-accent)] rounded-full" />
+          <button 
+            className="relative p-2.5 sm:p-2 rounded-xl hover:bg-[var(--luxury-gray-100)] transition-colors"
+            aria-label="Notificaciones"
+          >
+            <Bell size={20} className="text-[var(--luxury-gray-600)]" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[var(--gold-primary)] rounded-full ring-2 ring-white" />
           </button>
 
           {/* User menu */}
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-[var(--color-gray-100)] transition-colors"
+              className="flex items-center gap-2 sm:gap-3 p-1.5 rounded-xl hover:bg-[var(--luxury-gray-100)] transition-colors"
+              aria-label="Menú de usuario"
             >
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--gold-primary)] to-[var(--gold-light)] flex items-center justify-center shadow-md shadow-[var(--gold-glow)]">
                 <span className="text-white text-sm font-semibold">{initials}</span>
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-sm font-medium text-[var(--color-gray-800)]">
+                <p className="text-sm font-medium text-[var(--luxury-gray-900)]">
                   {user.email?.split("@")[0]}
                 </p>
-                <p className="text-xs text-[var(--color-gray-500)]">Administrador</p>
+                <p className="text-xs text-[var(--luxury-gray-600)]">Administrador</p>
               </div>
               <ChevronDown
                 size={16}
-                className={`hidden sm:block text-[var(--color-gray-400)] transition-transform duration-200 ${
+                className={`hidden sm:block text-[var(--luxury-gray-400)] transition-transform duration-200 ${
                   isDropdownOpen ? "rotate-180" : ""
                 }`}
               />
@@ -91,12 +95,12 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
                   className="fixed inset-0 z-10"
                   onClick={() => setIsDropdownOpen(false)}
                 />
-                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg border border-[var(--color-gray-200)] py-2 z-20">
-                  <div className="px-4 py-2 border-b border-[var(--color-gray-100)]">
-                    <p className="text-sm font-medium text-[var(--color-gray-800)]">
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-[var(--luxury-gray-200)] py-2 z-20 animate-fade-in">
+                  <div className="px-4 py-3 border-b border-[var(--luxury-gray-100)]">
+                    <p className="text-sm font-medium text-[var(--luxury-gray-900)] truncate">
                       {user.email}
                     </p>
-                    <p className="text-xs text-[var(--color-gray-500)]">Administrador</p>
+                    <p className="text-xs text-[var(--luxury-gray-600)] mt-0.5">Administrador</p>
                   </div>
                   <div className="py-1">
                     <button
@@ -104,7 +108,7 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
                         setIsDropdownOpen(false);
                         router.push("/dashboard/profile");
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[var(--color-gray-700)] hover:bg-[var(--color-gray-50)] transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--luxury-gray-700)] hover:bg-[var(--luxury-gray-50)] transition-colors"
                     >
                       <UserIcon size={16} />
                       Mi Perfil
@@ -114,17 +118,17 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
                         setIsDropdownOpen(false);
                         router.push("/dashboard/settings");
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[var(--color-gray-700)] hover:bg-[var(--color-gray-50)] transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--luxury-gray-700)] hover:bg-[var(--luxury-gray-50)] transition-colors"
                     >
                       <Settings size={16} />
                       Configuración
                     </button>
                   </div>
-                  <div className="border-t border-[var(--color-gray-100)] py-1">
+                  <div className="border-t border-[var(--luxury-gray-100)] py-1">
                     <button
                       onClick={handleLogout}
                       disabled={isLoggingOut}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
                     >
                       <LogOut size={16} />
                       {isLoggingOut ? "Cerrando sesión..." : "Cerrar Sesión"}

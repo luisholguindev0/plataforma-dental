@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* 2099 Futuristic Theme Definitions */
+  /* 2099 Futuristic Theme Definitions (Landing Page) */
   --color-bg-deep: #030305;
   --color-bg-surface: #0a0a10;
   --color-bg-glass: rgba(10, 10, 16, 0.6);
@@ -11,44 +11,66 @@
   --color-purple-main: #7000ff;
   --color-purple-glow: rgba(112, 0, 255, 0.5);
   
-  /* Legacy Variable Mapping (For Dashboard Compatibility - Dark Mode Override) */
-  --color-primary: #00f0ff;
-  --color-primary-light: #66f5ff;
-  --color-primary-dark: #00acc1;
+  /* Premium Luxury Theme (Dashboard & Auth) */
+  --gold-primary: #D4AF37;
+  --gold-light: #F4D03F;
+  --gold-dark: #B8941E;
+  --gold-champagne: #F7E7CE;
+  --gold-glow: rgba(212, 175, 55, 0.2);
   
-  --color-accent: #7000ff;
-  --color-accent-light: #a155ff;
-  --color-accent-dark: #4a00b3;
+  /* Premium Grays for Luxury Theme */
+  --luxury-gray-50: #FAFAFA;
+  --luxury-gray-100: #F5F5F5;
+  --luxury-gray-200: #EEEEEE;
+  --luxury-gray-300: #E0E0E0;
+  --luxury-gray-400: #BDBDBD;
+  --luxury-gray-500: #9E9E9E;
+  --luxury-gray-600: #757575;
+  --luxury-gray-700: #616161;
+  --luxury-gray-800: #424242;
+  --luxury-gray-900: #212121;
   
-  /* Inverted Neutrals for Dark Mode */
-  --color-white: #0a0a10; /* Card bg becomes dark */
-  --color-off-white: #030305; /* Page bg becomes darker */
+  /* Dashboard/Luxury Theme Variables */
+  --color-primary: var(--gold-primary);
+  --color-primary-light: var(--gold-light);
+  --color-primary-dark: var(--gold-dark);
   
-  /* Grays - Lightest is now darkest */
-  --color-gray-50: #050508;
-  --color-gray-100: #111116;
-  --color-gray-200: #1a1a20;
-  --color-gray-300: #2a2a30;
-  --color-gray-400: #4a4a55;
-  --color-gray-500: #6a6a75;
-  --color-gray-600: #8a8a95;
-  --color-gray-700: #a0a0ab;
-  --color-gray-800: #c0c0cb;
-  --color-gray-900: #ffffff; /* Main text becomes white */
+  --color-accent: #8B6F47;
+  --color-accent-light: #A68B5E;
+  --color-accent-dark: #6B5333;
+  
+  /* Dashboard Color System */
+  --color-white: #FFFFFF;
+  --color-off-white: #FAFAFA;
+  
+  /* Dashboard Grays */
+  --color-gray-50: #FAFAFA;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #EEEEEE;
+  --color-gray-300: #E0E0E0;
+  --color-gray-400: #BDBDBD;
+  --color-gray-500: #9E9E9E;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
 
-  --background: var(--color-bg-deep);
-  --foreground: #ffffff;
+  --background: #FFFFFF;
+  --foreground: #212121;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 240, 255, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 0 15px rgba(0, 240, 255, 0.1);
-  --shadow-xl: 0 0 25px rgba(0, 240, 255, 0.15);
+  /* Premium Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-gold: 0 10px 30px rgba(212, 175, 55, 0.15);
+  --shadow-gold-lg: 0 20px 40px rgba(212, 175, 55, 0.2);
 
-  --radius-sm: 0.25rem;
+  --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --radius-xl: 2rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
 }
 
 @theme inline {
@@ -83,17 +105,32 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom futuristic scrollbar */
-::-webkit-scrollbar {
+/* Custom futuristic scrollbar (Landing Page) */
+body:not(.dashboard) ::-webkit-scrollbar {
   width: 6px;
 }
-::-webkit-scrollbar-track {
+body:not(.dashboard) ::-webkit-scrollbar-track {
   background: var(--color-bg-deep);
 }
-::-webkit-scrollbar-thumb {
+body:not(.dashboard) ::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 3px;
   box-shadow: 0 0 10px var(--color-cyan-glow);
+}
+
+/* Custom premium scrollbar (Dashboard) */
+.dashboard ::-webkit-scrollbar {
+  width: 8px;
+}
+.dashboard ::-webkit-scrollbar-track {
+  background: var(--luxury-gray-100);
+}
+.dashboard ::-webkit-scrollbar-thumb {
+  background: var(--luxury-gray-300);
+  border-radius: 4px;
+}
+.dashboard ::-webkit-scrollbar-thumb:hover {
+  background: var(--luxury-gray-400);
 }
 
 /* Typography */
@@ -123,6 +160,78 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-5px) scale(1.02);
   border-color: var(--color-primary);
   box-shadow: 0 0 20px var(--color-cyan-glow), inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+/* Premium Luxury Utility Classes */
+.premium-card {
+  background: #FFFFFF;
+  border: 1px solid var(--luxury-gray-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
+  border-color: var(--gold-primary);
+}
+
+.glass-panel-premium {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: var(--shadow-gold-lg);
+}
+
+.premium-gradient {
+  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 50%, var(--gold-champagne) 100%);
+}
+
+.premium-gradient-subtle {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 208, 63, 0.05) 100%);
+}
+
+.btn-premium {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-gold);
+  overflow: hidden;
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.btn-premium:hover {
+  box-shadow: var(--shadow-gold-lg);
+  transform: translateY(-2px);
+}
+
+.btn-premium:hover::before {
+  left: 0;
+}
+
+.btn-premium > * {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-cyber {
@@ -193,3 +302,24 @@ h1, h2, h3, h4, h5, h6 {
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
+
+/* Mobile-first responsive utilities */
+@media (max-width: 640px) {
+  .premium-card {
+    border-radius: var(--radius-lg);
+  }
+  
+  /* Ensure text doesn't overflow on mobile */
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Touch-friendly tap targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
