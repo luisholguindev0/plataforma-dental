@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import FuturisticBackground from "@/components/layout/FuturisticBackground";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -17,11 +18,11 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: {
-    default: "Dr. Jhoiner Marquez | Odontología Estética en Barranquilla",
+    default: "Dr. Jhoiner Marquez | Odontología Futurista",
     template: "%s | Dr. Jhoiner Marquez",
   },
   description:
-    "Especialista en Estética Dental, Diseño de Sonrisa y Rehabilitación Oral en Barranquilla. Transforma tu sonrisa con tecnología de vanguardia y atención personalizada. Agenda tu valoración hoy.",
+    "Odontología de vanguardia. Experimenta el futuro del diseño de sonrisa en Barranquilla.",
   keywords: [
     "dentista Barranquilla",
     "odontólogo Barranquilla",
@@ -173,16 +174,19 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#1a365d" />
+        <meta name="theme-color" content="#030305" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body
-        className={`${dmSans.variable} ${playfair.variable} antialiased`}
+        className={`${dmSans.variable} ${playfair.variable} antialiased relative min-h-screen text-white`}
       >
-        {children}
+        <FuturisticBackground />
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );

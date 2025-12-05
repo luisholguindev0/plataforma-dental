@@ -1,78 +1,73 @@
 "use client";
 
-import { Sparkles, Smile, RefreshCw, ArrowRight, Check } from "lucide-react";
+import { Sparkles, Smile, RefreshCw, ArrowRight, Check, Cpu, Scan, Zap } from "lucide-react";
 
 const services = [
   {
     id: "estetica-dental",
     icon: Sparkles,
-    title: "Estética Dental",
+    title: "Estética Cuántica",
     description:
-      "Mejora la apariencia de tu sonrisa con tratamientos estéticos de última generación.",
+      "Optimización visual de la sonrisa mediante nanotecnología y materiales de última generación.",
     features: [
-      "Blanqueamiento dental profesional",
-      "Carillas de porcelana",
-      "Contorneado dental",
-      "Restauraciones estéticas",
+      "Blanqueamiento Fotónico",
+      "Carillas de Grafeno/Cerámica",
+      "Micro-contorneado Láser",
+      "Restauraciones Biomiméticas",
     ],
-    color: "from-blue-500 to-blue-600",
-    bgColor: "bg-blue-50",
-    textColor: "text-blue-600",
+    color: "text-cyan-400",
+    bgColor: "bg-cyan-900/20",
+    borderColor: "border-cyan-500/30",
   },
   {
     id: "diseno-sonrisa",
-    icon: Smile,
-    title: "Diseño de Sonrisa",
+    icon: Scan,
+    title: "Arquitectura Digital",
     description:
-      "Transformación completa de tu sonrisa diseñada digitalmente para resultados perfectos.",
+      "Modelado 3D y simulación predictiva para una sonrisa matemáticamente perfecta.",
     features: [
-      "Diseño digital personalizado",
-      "Vista previa de resultados",
-      "Carillas ultrafinas",
-      "Armonía facial completa",
+      "Escaneo Intraoral 4D",
+      "Prototipado Virtual",
+      "Bio-integración Facial",
+      "Previsualización Holística",
     ],
-    color: "from-[var(--color-accent)] to-[var(--color-accent-dark)]",
-    bgColor: "bg-[var(--color-accent)]/10",
-    textColor: "text-[var(--color-accent-dark)]",
+    color: "text-purple-400",
+    bgColor: "bg-purple-900/20",
+    borderColor: "border-purple-500/30",
     featured: true,
   },
   {
     id: "rehabilitacion-oral",
-    icon: RefreshCw,
-    title: "Rehabilitación Oral",
+    icon: Cpu,
+    title: "Bio-Rehabilitación",
     description:
-      "Recupera la función y estética de tu boca con tratamientos integrales y duraderos.",
+      "Restauración funcional de sistemas orales complejos mediante ingeniería de tejidos y prótesis avanzadas.",
     features: [
-      "Implantes dentales",
-      "Prótesis fijas y removibles",
-      "Coronas y puentes",
-      "Reconstrucción total",
+      "Implantes de Titanio/Zirconio",
+      "Prótesis Híbridas",
+      "Regeneración Tisular",
+      "Sistemas de Anclaje",
     ],
-    color: "from-emerald-500 to-emerald-600",
-    bgColor: "bg-emerald-50",
-    textColor: "text-emerald-600",
+    color: "text-emerald-400",
+    bgColor: "bg-emerald-900/20",
+    borderColor: "border-emerald-500/30",
   },
 ];
 
 export default function Services() {
   return (
-    <section id="servicios" className="section-lg bg-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[var(--color-off-white)] to-transparent" />
-
+    <section id="servicios" className="section-lg relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-block text-[var(--color-accent)] font-medium text-sm uppercase tracking-wider mb-4">
-            Nuestros Servicios
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <span className="inline-block text-cyan-400 font-mono text-xs uppercase tracking-[0.3em] mb-4 animate-pulse">
+            Protocolos Disponibles
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] mb-6">
-            Soluciones Dentales{" "}
-            <span className="text-[var(--color-accent)]">Personalizadas</span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            Sistemas de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">Mejora Humana</span>
           </h2>
-          <p className="text-lg text-[var(--color-gray-600)]">
-            Ofrecemos tratamientos especializados adaptados a tus necesidades,
-            utilizando tecnología de vanguardia para garantizar los mejores resultados.
+          <p className="text-lg text-gray-400">
+            Intervenciones de alta precisión para la actualización estética y funcional de su interfaz biológica.
           </p>
         </div>
 
@@ -81,44 +76,38 @@ export default function Services() {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`group relative bg-white rounded-3xl p-8 transition-all duration-300 hover:shadow-2xl ${
-                service.featured
-                  ? "ring-2 ring-[var(--color-accent)] shadow-xl lg:-translate-y-4"
-                  : "shadow-lg hover:-translate-y-2"
+              className={`group relative glass-card rounded-3xl p-8 hover:-translate-y-2 transition-all duration-500 ${
+                service.featured ? "border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.15)]" : "border-white/5"
               }`}
-              style={{ animationDelay: `${index * 100}ms` }}
             >
               {service.featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-dark)] text-white text-xs font-semibold px-4 py-1 rounded-full">
-                  Más Popular
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-900 text-cyan-300 border border-cyan-500/50 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(34,211,238,0.4)]">
+                  Sistema Central
                 </div>
               )}
 
               {/* Icon */}
               <div
-                className={`w-16 h-16 rounded-2xl ${service.bgColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                className={`w-16 h-16 rounded-2xl ${service.bgColor} border ${service.borderColor} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 relative overflow-hidden`}
               >
-                <service.icon size={32} className={service.textColor} />
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <service.icon size={32} className={service.color} />
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-serif font-bold text-[var(--color-primary)] mb-3">
+              <h3 className={`text-2xl font-bold mb-4 ${service.featured ? "text-white" : "text-gray-200"}`}>
                 {service.title}
               </h3>
-              <p className="text-[var(--color-gray-600)] mb-6">
+              <p className="text-gray-400 mb-8 leading-relaxed">
                 {service.description}
               </p>
 
               {/* Features */}
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-4 mb-8">
                 {service.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3">
-                    <div
-                      className={`w-5 h-5 rounded-full ${service.bgColor} flex items-center justify-center flex-shrink-0`}
-                    >
-                      <Check size={12} className={service.textColor} />
-                    </div>
-                    <span className="text-sm text-[var(--color-gray-700)]">
+                  <li key={idx} className="flex items-center gap-3 text-gray-300">
+                    <div className={`w-1.5 h-1.5 rounded-full ${service.color.replace('text', 'bg')} shadow-[0_0_8px_currentColor]`} />
+                    <span className="text-sm tracking-wide">
                       {feature}
                     </span>
                   </li>
@@ -127,35 +116,18 @@ export default function Services() {
 
               {/* CTA */}
               <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Hola Dr. Jhoiner, estoy interesado en ${service.title}. Me gustaría más información.`}
+                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Iniciar protocolo: ${service.title}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2 font-semibold ${service.textColor} hover:gap-4 transition-all duration-300`}
+                className={`inline-flex items-center gap-2 font-bold text-sm uppercase tracking-wider ${service.color} hover:gap-4 transition-all duration-300`}
               >
-                Consultar ahora
-                <ArrowRight size={18} />
+                Inicializar
+                <ArrowRight size={16} />
               </a>
             </div>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p className="text-[var(--color-gray-600)] mb-4">
-            ¿No estás seguro de qué tratamiento necesitas?
-          </p>
-          <a
-            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573014990844"}?text=Hola Dr. Jhoiner, me gustaría una valoración para conocer qué tratamiento es el más adecuado para mí.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary"
-          >
-            Agenda una Valoración Gratuita
-            <ArrowRight size={18} />
-          </a>
         </div>
       </div>
     </section>
   );
 }
-
