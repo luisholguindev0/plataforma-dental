@@ -86,7 +86,10 @@
   --font-sans: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-playfair), Georgia, serif;
 
-  /* ========== CUSTOM SPACING (use --space-* to avoid Tailwind conflicts) ========== */
+  /* ========== CUSTOM SPACING ========== */
+  /* NOTE: Using --space-* instead of --spacing-* to avoid conflicts with Tailwind v4
+     Tailwind v4 uses --spacing-* internally for max-width utilities (max-w-2xl, etc.)
+     Using --spacing-* here would override those, breaking the layout! */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -210,7 +213,7 @@ body:not(.dashboard) ::-webkit-scrollbar-thumb {
 .premium-card {
   background: linear-gradient(145deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 12, 20, 0.9) 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 1.25rem;
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -293,7 +296,12 @@ body:not(.dashboard) ::-webkit-scrollbar-thumb {
 
 @media (max-width: 640px) {
   .premium-card {
-    border-radius: 0.875rem;
+    border-radius: var(--radius-lg);
+  }
+  
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 
