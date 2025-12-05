@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./global.css";
 
@@ -89,7 +89,10 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   category: "Salud",
-  themeColor: "#05060a",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#030305",
 };
 
 // JSON-LD Schema for Local Business
